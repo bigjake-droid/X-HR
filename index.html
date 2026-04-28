@@ -4,103 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>X-HR | Employee Defense Matrix</title>
+    
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg-warm-white: #FAFAFA; /* Calmer than stark white */
-            --charcoal: #333333; /* Muscular but not aggressive */
-            --charcoal-light: #555555;
-            --accent-warm: #EAE6DF; /* Very subtle warm grey for cards */
-        }
-
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-
-        body { 
-            background-color: var(--bg-warm-white); 
-            color: var(--charcoal); 
-            font-family: 'Inter', sans-serif; 
-            padding: 20px;
-        }
-
-        .header {
-            text-align: center;
-            border-bottom: 2px solid var(--charcoal);
-            padding-bottom: 20px;
-            margin-bottom: 30px;
-        }
-
-        .header h1 {
-            font-size: 2.5rem;
-            font-weight: 700;
-            letter-spacing: 2px;
-            color: var(--charcoal);
-        }
-
-        .header p {
-            font-size: 0.9rem;
-            font-weight: 500;
-            color: var(--charcoal-light);
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
-
-        .module-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 20px;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        /* The Charcoal Border System */
-        .card {
-            background-color: #FFFFFF;
-            border: 2px solid var(--charcoal);
-            border-radius: 8px; /* Softer edges than The Ledger */
-            padding: 25px;
-            box-shadow: 4px 4px 0px var(--accent-warm); /* Grounding shadow */
-        }
-
-        .card h3 {
-            font-size: 1.2rem;
-            border-bottom: 1px solid var(--charcoal-light);
-            padding-bottom: 10px;
-            margin-bottom: 15px;
-        }
-
-        .card p {
-            font-size: 0.95rem;
-            line-height: 1.5;
-            color: var(--charcoal-light);
-            margin-bottom: 20px;
-        }
-
-        .btn-charcoal {
-            width: 100%;
-            background-color: var(--charcoal);
-            color: #FFFFFF;
-            border: none;
-            padding: 15px;
-            font-size: 1rem;
-            font-weight: 700;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-
-        .btn-charcoal:hover {
-            background-color: #000000;
-        }
-    </style>
+    
+    <link rel="stylesheet" href="style.css">
+    
+    <link rel="icon" type="image/png" href="x-hr.png (192).png">
+    <link rel="apple-touch-icon" href="x-hr.png (192).png">
 </head>
 <body>
 
     <div class="header">
+        <img src="x-hr.png (192).png" alt="X-HR Shield" style="width: 100px; margin-bottom: 15px; border-radius: 8px;">
         <h1>X-HR</h1>
         <p>Proactive Employee Defense Systems</p>
     </div>
 
     <div class="module-grid">
+        
         <div class="card">
             <h3>Contemporaneous Journal</h3>
             <p>Log workplace incidents, verbal threats, and hostile actions the moment they happen. Secure your timeline before HR builds theirs.</p>
@@ -118,7 +39,10 @@
             <p>Secure screenshots of glowing performance reviews and internal communications before corporate IT severs your server access.</p>
             <button class="btn-charcoal">SECURE EVIDENCE</button>
         </div>
+        
     </div>
+
+    <script src="script.js"></script>
 
 </body>
 </html>
