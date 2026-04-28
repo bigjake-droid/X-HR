@@ -1,0 +1,94 @@
+/* --- X-HR MASTER STYLESHEET --- */
+
+:root {
+    --bg-warm-white: #FAFAFA; /* Calmer than stark white */
+    --charcoal: #333333;      /* Muscular but not aggressive */
+    --charcoal-light: #555555;
+    --accent-warm: #EAE6DF;   /* Very subtle warm grey for grounding shadows */
+}
+
+* { 
+    box-sizing: border-box; 
+    margin: 0; 
+    padding: 0; 
+}
+
+body { 
+    background-color: var(--bg-warm-white); 
+    color: var(--charcoal); 
+    font-family: 'Inter', sans-serif; 
+    padding: 20px;
+}
+
+/* --- HEADER SYSTEM --- */
+.header {
+    text-align: center;
+    border-bottom: 2px solid var(--charcoal);
+    padding-bottom: 20px;
+    margin-bottom: 30px;
+}
+
+.header h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: var(--charcoal);
+}
+
+.header p {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--charcoal-light);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+/* --- MODULE GRID (MAIN LAYOUT) --- */
+.module-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* --- THE CHARCOAL BORDER SYSTEM (CARDS) --- */
+.card {
+    background-color: #FFFFFF;
+    border: 2px solid var(--charcoal);
+    border-radius: 8px; /* Softer edges for a more welcoming feel */
+    padding: 25px;
+    box-shadow: 4px 4px 0px var(--accent-warm); /* Grounding shadow */
+}
+
+.card h3 {
+    font-size: 1.2rem;
+    border-bottom: 1px solid var(--charcoal-light);
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+}
+
+.card p {
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: var(--charcoal-light);
+    margin-bottom: 20px;
+}
+
+/* --- BUTTONS --- */
+.btn-charcoal {
+    width: 100%;
+    background-color: var(--charcoal);
+    color: #FFFFFF;
+    border: none;
+    padding: 15px;
+    font-size: 1rem;
+    font-weight: 700;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn-charcoal:hover {
+    background-color: #000000;
+}
