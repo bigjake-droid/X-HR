@@ -1,11 +1,12 @@
 // --- 1. STATE MANAGEMENT (X-HR ISOLATED STORAGE) ---
+// We use a unique key so it never overwrites your CaseForge or Ledger data.
 let state = {
-    incidents: [], // Contemporaneous Journal
+    incidents: [], 
     radar: {
         protectedActs: [],
         adverseActions: []
     },
-    evidence: [] // Off-Grid Vault
+    evidence: [] 
 };
 
 const STORAGE_KEY = 'xhrDefenseState';
@@ -24,7 +25,9 @@ function injectUIComponents() {
     if(header) {
         const exportBtn = document.createElement('button');
         exportBtn.innerText = "EXPORT DEFENSE DOSSIER";
-        exportBtn.style.cssText = "margin-top: 15px; background: transparent; border: 2px solid var(--charcoal); color: var(--charcoal); padding: 8px 15px; font-weight: 700; cursor: pointer; border-radius: 4px;";
+        exportBtn.style.cssText = "margin-top: 15px; background: transparent; border: 2px solid var(--charcoal); color: var(--charcoal); padding: 8px 15px; font-weight: 700; cursor: pointer; border-radius: 4px; transition: all 0.2s;";
+        exportBtn.onmouseover = () => { exportBtn.style.background = "var(--charcoal)"; exportBtn.style.color = "#fff"; };
+        exportBtn.onmouseout = () => { exportBtn.style.background = "transparent"; exportBtn.style.color = "var(--charcoal)"; };
         exportBtn.onclick = generateHRDossier;
         header.appendChild(exportBtn);
     }
@@ -67,7 +70,6 @@ function logRadarEvent(type, date, desc) {
     const event = { date: date, desc: desc, loggedAt: new Date().toLocaleDateString() };
     if(type === 'protected') {
         state.radar.protectedActs.push(event);
-        // Sort chronologically
         state.radar.protectedActs.sort((a, b) => new Date(a.date) - new Date(b.date));
     } else {
         state.radar.adverseActions.push(event);
@@ -114,7 +116,7 @@ function updateUI() {
                     <strong style="font-size:0.9rem;">${inc.date} | Aggressor: ${inc.aggressor}</strong>
                     <p style="font-size:0.85rem; margin: 5px 0 0 0;">${inc.desc}</p>
                 </div>
-            `).join('') + (state.incidents.length > 3 ? `<p style="font-size:0.8rem; text-align:center;">+${state.incidents.length - 3} more entries on record.</p>` : '');
+            `).join('') + (state.incidents.length > 3 ? `<p style="font-size:0.8rem; text-align:center; font-weight: 700;">+${state.incidents.length - 3} more entries securely logged.</p>` : '');
         }
     }
 
@@ -123,7 +125,7 @@ function updateUI() {
     if(radarArea) {
         let radarHTML = '';
         
-        // Causal Gap Math
+        // Causal Gap Math Engine
         if(state.radar.protectedActs.length > 0 && state.radar.adverseActions.length > 0) {
             const firstProtected = new Date(state.radar.protectedActs[0].date);
             const firstAdverse = new Date(state.radar.adverseActions[0].date);
@@ -257,7 +259,6 @@ function openVaultModal() {
 
 // --- 6. DATA EXPORT ---
 function generateHRDossier() {
-    // Basic text export until you add jsPDF to the HTML head
     const reportData = JSON.stringify(state, null, 2);
     const blob = new Blob([reportData], { type: "application/json" });
     const url = URL.createObjectURL(blob);
@@ -267,5 +268,4 @@ function generateHRDossier() {
     document.body.appendChild(a);
     a.click();
     setTimeout(() => { document.body.removeChild(a); window.URL.revokeObjectURL(url); }, 100);
-    alert("Dossier data exported. (PDF Engine can be wired in next deployment).");
 }
