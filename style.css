@@ -1,11 +1,11 @@
-/* --- X-HR MASTER STYLESHEET (THE ARMOR) --- */
+/* --- X-HR MASTER STYLESHEET (TIER-1 PREMIUM UPGRADE) --- */
 
 :root {
-    --bg-warm-white: #FAFAFA;
-    --charcoal: #333333;
-    --charcoal-light: #555555;
-    --accent-warm: #EAE6DF;
-    --emerald: #065F46; /* High-end corporate emerald */
+    --bg-gradient: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+    --charcoal: #1f2937;
+    --charcoal-light: #4b5563;
+    --emerald: #065F46; 
+    --card-bg: #ffffff;
 }
 
 * { 
@@ -15,12 +15,12 @@
 }
 
 body { 
-    background-color: var(--bg-warm-white); 
+    background: var(--bg-gradient); 
     color: var(--charcoal); 
     font-family: 'Inter', sans-serif; 
     padding: 20px;
     line-height: 1.6;
-    border-top: 8px solid var(--emerald); /* Corporate letterhead strike */
+    min-height: 100vh;
 }
 
 /* --- SPLASH SCREEN --- */
@@ -30,8 +30,8 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: var(--charcoal);
-    color: var(--bg-warm-white);
+    background-color: #111827; /* Darker, richer entry screen */
+    color: #f9fafb;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -40,6 +40,7 @@ body {
     text-align: center;
     padding: 20px 20px 15vh 20px; 
     transition: opacity 0.5s ease;
+    border-top: 8px solid var(--emerald);
 }
 
 .splash-screen.hidden {
@@ -52,7 +53,7 @@ body {
     line-height: 1.6;
     margin-bottom: 40px;
     max-width: 500px;
-    color: #cccccc;
+    color: #9ca3af;
 }
 
 .splash-mission strong {
@@ -63,31 +64,38 @@ body {
     letter-spacing: 1px;
 }
 
-/* Splash Button gets an emerald outline */
 .btn-splash {
     background-color: transparent;
-    color: var(--bg-warm-white);
+    color: #ffffff;
     border: 2px solid var(--emerald);
     padding: 15px 30px;
     font-size: 1rem;
     font-weight: 700;
-    border-radius: 4px;
+    border-radius: 6px;
     cursor: pointer;
-    transition: all 0.2s;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 .btn-splash:hover {
     background-color: var(--emerald);
-    color: #ffffff;
-    box-shadow: 0 4px 15px rgba(6, 95, 70, 0.4);
+    box-shadow: 0 4px 20px rgba(6, 95, 70, 0.5);
+    transform: translateY(-2px);
 }
 
 /* --- HEADER & INSIGNIA --- */
 .header {
     text-align: center;
-    padding-bottom: 10px;
-    margin-bottom: 30px;
-    position: relative;
+    background: var(--card-bg);
+    padding: 40px 20px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    margin-bottom: 40px;
+    border-top: 6px solid var(--emerald);
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .header h1 {
@@ -99,56 +107,61 @@ body {
 }
 
 .header p {
-    font-size: 0.9rem;
+    font-size: 0.95rem;
     font-weight: 500;
     color: var(--charcoal-light);
     letter-spacing: 1px;
     text-transform: uppercase;
 }
 
-/* The Emerald Anchor beneath the header */
-.header::after {
-    content: '';
-    display: block;
-    width: 80px;
-    height: 4px;
-    background-color: var(--emerald);
-    margin: 20px auto 0 auto;
-    border-radius: 2px;
-}
-
 /* --- TACTICAL GRID --- */
 .module-grid {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 20px;
+    gap: 25px;
     max-width: 600px;
     margin: 0 auto;
 }
 
-/* --- THE CHARCOAL BORDER SYSTEM --- */
+/* --- THE ELEVATED CARD SYSTEM --- */
 .card {
-    background-color: #FFFFFF;
-    border: 2px solid var(--charcoal);
-    border-radius: 8px;
-    padding: 25px;
-    box-shadow: 4px 4px 0px var(--accent-warm);
-    transition: transform 0.2s ease;
+    background-color: var(--card-bg);
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+}
+
+/* The Emerald Backbone */
+.card::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 5px;
+    background-color: var(--emerald);
 }
 
 .card h3 {
-    font-size: 1.25rem;
+    font-size: 1.3rem;
     font-weight: 700;
-    border-bottom: 1px solid var(--accent-warm);
-    padding-bottom: 10px;
-    margin-bottom: 15px;
+    margin-bottom: 12px;
     color: var(--charcoal);
 }
 
 .card p {
     font-size: 0.95rem;
     color: var(--charcoal-light);
-    margin-bottom: 20px;
+    margin-bottom: 25px;
+    line-height: 1.7;
 }
 
 /* --- ACTION BUTTONS --- */
@@ -156,42 +169,47 @@ body {
     width: 100%;
     background-color: var(--charcoal);
     color: #FFFFFF;
-    border: 2px solid var(--charcoal);
-    padding: 15px;
-    font-size: 1rem;
+    border: none;
+    padding: 16px;
+    font-size: 0.95rem;
     font-weight: 700;
-    border-radius: 4px;
+    letter-spacing: 1px;
+    border-radius: 6px;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
 }
 
-/* The Kinetic Emerald Strike on Hover/Tap */
 .btn-charcoal:hover {
     background-color: var(--emerald);
-    border-color: var(--emerald);
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(6, 95, 70, 0.25);
+    box-shadow: 0 8px 15px rgba(6, 95, 70, 0.25);
 }
 
 /* --- DYNAMIC UI INJECTIONS --- */
 input, select, textarea {
-    border-radius: 4px;
-    transition: border-color 0.2s;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    background-color: #f9fafb;
 }
 
 input:focus, select:focus, textarea:focus {
     outline: none;
-    border-color: var(--emerald) !important; /* Highlights active inputs in emerald */
+    border-color: var(--emerald) !important;
+    background-color: #ffffff;
+    box-shadow: 0 0 0 3px rgba(6, 95, 70, 0.1);
 }
 
 /* --- PRO SE DOCUMENT ENGINE (PLEADING PAPER) --- */
 .pleading-paper-container {
-    background: #e0e0e0; 
+    background: #d1d5db; 
     padding: 20px;
-    border-radius: 4px;
+    border-radius: 8px;
     max-height: 60vh;
     overflow-y: auto;
     margin-bottom: 20px;
+    box-shadow: inset 0 2px 10px rgba(0,0,0,0.1);
 }
 
 .pleading-paper {
@@ -204,7 +222,7 @@ input:focus, select:focus, textarea:focus {
     font-size: 12pt;
     line-height: 2; 
     color: #000;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
     text-align: left;
 }
 
