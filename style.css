@@ -36,7 +36,8 @@ body {
     align-items: center;
     z-index: 9999;
     text-align: center;
-    padding: 30px;
+    /* Pushes the center of gravity 15% higher to clear mobile navigation bars */
+    padding: 20px 20px 15vh 20px; 
     transition: opacity 0.5s ease;
 }
 
@@ -48,7 +49,7 @@ body {
 .splash-mission {
     font-size: 1.1rem;
     line-height: 1.6;
-    margin-bottom: 30px;
+    margin-bottom: 40px; /* Increased to give the button more breathing room */
     max-width: 500px;
     color: #cccccc;
 }
