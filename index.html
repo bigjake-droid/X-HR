@@ -7,49 +7,51 @@
     
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=2.0">
     
     <link rel="icon" type="image/png" href="x-hr.png (192).png">
     <link rel="apple-touch-icon" href="x-hr.png (192).png">
 </head>
 <body>
 
-    <div id="splashScreen" class="splash-screen">
-        <div class="splash-container">
-            <div class="splash-shield-wrapper">
-                <div class="splash-glow"></div>
-                <img src="x-hr.png (512).png" alt="X-HR Shield" class="splash-img">
-            </div>
+    <div id="splashScreen" class="splash-tactical">
+        <div class="splash-content">
             
-            <h1 class="splash-title">X<span class="text-emerald">♦</span>HR</h1>
+            <div class="shield-wrapper">
+                <div class="shield-glow"></div>
+                <img src="x-hr.png (512).png" alt="X-HR Shield" class="shield-img">
+            </div>
+
+            <h1 class="splash-title">X <span class="emerald-diamond">♦</span> HR</h1>
             <p class="splash-subtitle">PROACTIVE EMPLOYEE DEFENSE SYSTEMS</p>
-            
+
             <div class="splash-divider">
-                <div class="splash-line"></div>
-                <div class="splash-icon">🛡️</div>
-                <div class="splash-line"></div>
+                <div class="line"></div>
+                <div class="shield-icon">🛡️</div>
+                <div class="line"></div>
             </div>
-            
-            <p class="splash-text">
+
+            <p class="splash-mission-text">
                 Document everything. Control the narrative.<br>
-                Your defense starts <span class="text-emerald">before</span> the conflict.
+                Your defense starts <span class="text-green">before</span> the conflict.
             </p>
-            
+
             <button class="btn-splash-dossier" onclick="document.getElementById('splashScreen').classList.add('hidden')">
-                <span class="btn-icon">📄</span> 
-                BUILD DEFENSE DOSSIER 
-                <span class="btn-arrow">›</span>
+                <span class="icon-left">📄</span>
+                <span class="text-center">BUILD DEFENSE DOSSIER</span>
+                <span class="icon-right">›</span>
             </button>
+            
         </div>
+    </div>
+
+    <div class="header-dark">
+        <h1>X<span class="emerald-dot" style="color:#10b981; font-size: 2rem;">♦</span>HR</h1>
+        <p class="subtitle" style="font-size: 0.8rem; color: #9ca3af; letter-spacing: 2px;">SECURE DASHBOARD</p>
     </div>
 
     <div class="module-grid">
         
-        <div class="app-header">
-            <h2>X<span class="text-emerald">♦</span>HR COMMAND</h2>
-            <button id="btn-export-dossier" class="btn-export-small">EXPORT RECORD</button>
-        </div>
-
         <div class="card">
             <h3>Contemporaneous Journal</h3>
             <p>Log workplace incidents, verbal threats, and hostile actions the moment they happen. Secure your timeline before HR builds theirs.</p>
