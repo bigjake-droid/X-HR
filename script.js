@@ -36,7 +36,7 @@ function injectUIComponents() {
             if(index < 3) { // Only inject display areas for the first 3 modules
                 const displayArea = document.createElement('div');
                 displayArea.id = `displayArea-${index}`;
-                displayArea.style.cssText = "margin-top: 20px; border-top: 1px solid var(--charcoal-light); padding-top: 15px;";
+                displayArea.style.cssText = "margin-top: 20px; border-top: 1px solid #d1d5db; padding-top: 15px;";
                 card.appendChild(displayArea);
             }
         });
@@ -111,7 +111,7 @@ function updateUI() {
             journalArea.innerHTML = `<p style="font-size:0.85rem; color:var(--charcoal-light);">No incidents logged.</p>`;
         } else {
             journalArea.innerHTML = state.incidents.slice(0,3).map(inc => `
-                <div style="margin-bottom: 10px; padding: 10px; background: var(--bg-warm-white); border-left: 3px solid var(--charcoal);">
+                <div style="margin-bottom: 10px; padding: 10px; background: #f9fafb; border-left: 3px solid var(--charcoal); border-radius: 4px;">
                     <strong style="font-size:0.9rem;">${inc.date} | Aggressor: ${inc.aggressor}</strong>
                     <p style="font-size:0.85rem; margin: 5px 0 0 0;">${inc.desc}</p>
                 </div>
@@ -130,9 +130,9 @@ function updateUI() {
             
             if(diffDays >= 0) {
                 radarHTML += `
-                <div style="background: #FFF0F0; border: 1px solid #b91c1c; padding: 10px; margin-bottom: 15px; border-radius: 4px;">
-                    <strong style="color: #b91c1c; font-size:0.9rem;">⚠️ CAUSAL GAP DETECTED: ${diffDays} DAYS</strong>
-                    <p style="font-size:0.8rem; color: #b91c1c; margin-top:3px;">Between protected act and adverse action. High probability of retaliation.</p>
+                <div style="background: #FEF2F2; border: 1px solid #DC2626; padding: 12px; margin-bottom: 15px; border-radius: 6px;">
+                    <strong style="color: #DC2626; font-size:0.9rem;">⚠️ CAUSAL GAP DETECTED: ${diffDays} DAYS</strong>
+                    <p style="font-size:0.8rem; color: #991B1B; margin-top:4px;">Between protected act and adverse action. High probability of retaliation.</p>
                 </div>`;
             }
         }
@@ -149,7 +149,7 @@ function updateUI() {
             vaultArea.innerHTML = `<p style="font-size:0.85rem; color:var(--charcoal-light);">No exhibits secured.</p>`;
         } else {
             vaultArea.innerHTML = state.evidence.map(ex => `
-                <div style="display:flex; justify-content:space-between; font-size:0.85rem; padding: 5px 0; border-bottom: 1px dashed #ccc;">
+                <div style="display:flex; justify-content:space-between; font-size:0.85rem; padding: 8px 0; border-bottom: 1px dashed #d1d5db;">
                     <span><strong>${ex.id}:</strong> ${ex.desc}</span>
                     <span style="color:var(--charcoal-light);">${ex.date}</span>
                 </div>
@@ -165,16 +165,16 @@ function createModalOverlay(title, innerHTML, onSave, hideSave = false) {
 
     const overlay = document.createElement('div');
     overlay.id = 'xhrModal';
-    overlay.style.cssText = "position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(250, 250, 250, 0.95); display:flex; justify-content:center; align-items:center; z-index:1000; padding:20px;";
+    overlay.style.cssText = "position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(31, 41, 55, 0.7); display:flex; justify-content:center; align-items:center; z-index:1000; padding:20px; backdrop-filter: blur(4px);";
     
-    let buttonsHTML = `<button onclick="document.getElementById('xhrModal').remove()" style="flex:1; padding:12px; background:transparent; border:2px solid var(--charcoal); color:var(--charcoal); font-weight:700; cursor:pointer;">${hideSave ? 'CLOSE' : 'CANCEL'}</button>`;
+    let buttonsHTML = `<button onclick="document.getElementById('xhrModal').remove()" style="flex:1; padding:12px; background:transparent; border:2px solid var(--charcoal); color:var(--charcoal); font-weight:700; border-radius:6px; cursor:pointer;">${hideSave ? 'CLOSE' : 'CANCEL'}</button>`;
     if(!hideSave) {
-        buttonsHTML += `<button id="modalSaveBtn" style="flex:1; padding:12px; background:var(--charcoal); border:2px solid var(--charcoal); color:#fff; font-weight:700; cursor:pointer;">SAVE TO RECORD</button>`;
+        buttonsHTML += `<button id="modalSaveBtn" style="flex:1; padding:12px; background:var(--charcoal); border:none; color:#fff; font-weight:700; border-radius:6px; cursor:pointer;">SAVE TO RECORD</button>`;
     }
 
     overlay.innerHTML = `
-        <div style="background:#fff; border:2px solid var(--charcoal); padding:30px; width:100%; max-width:600px; border-radius:8px; box-shadow: 4px 4px 0px var(--accent-warm); max-height: 90vh; overflow-y: auto;">
-            <h3 style="font-size:1.5rem; border-bottom:2px solid var(--charcoal); padding-bottom:10px; margin-bottom:20px;">${title}</h3>
+        <div style="background:#fff; border-radius:12px; padding:30px; width:100%; max-width:600px; box-shadow: 0 20px 40px rgba(0,0,0,0.2); max-height: 90vh; overflow-y: auto;">
+            <h3 style="font-size:1.5rem; border-bottom:2px solid #e5e7eb; padding-bottom:12px; margin-bottom:20px; color:var(--charcoal);">${title}</h3>
             ${innerHTML}
             <div style="display:flex; gap:10px; margin-top:25px;">
                 ${buttonsHTML}
@@ -187,14 +187,14 @@ function createModalOverlay(title, innerHTML, onSave, hideSave = false) {
 
 function openJournalModal() {
     const html = `
-        <label style="display:block; font-size:0.8rem; font-weight:700; margin-bottom:5px;">DATE OF INCIDENT</label>
-        <input type="date" id="jDate" style="width:100%; padding:10px; border:1px solid #ccc; margin-bottom:15px; font-family:inherit;">
-        <label style="display:block; font-size:0.8rem; font-weight:700; margin-bottom:5px;">AGGRESSOR / MANAGER NAME</label>
-        <input type="text" id="jName" style="width:100%; padding:10px; border:1px solid #ccc; margin-bottom:15px; font-family:inherit;" placeholder="Who committed the action?">
-        <label style="display:block; font-size:0.8rem; font-weight:700; margin-bottom:5px;">DESCRIPTION OF EVENT / THREAT</label>
-        <textarea id="jDesc" style="width:100%; padding:10px; border:1px solid #ccc; margin-bottom:15px; font-family:inherit; min-height:80px;" placeholder="Exact quotes if possible..."></textarea>
-        <label style="display:block; font-size:0.8rem; font-weight:700; margin-bottom:5px;">WITNESSES (IF ANY)</label>
-        <input type="text" id="jWit" style="width:100%; padding:10px; border:1px solid #ccc; margin-bottom:15px; font-family:inherit;" placeholder="Names of others present">
+        <label style="display:block; font-size:0.85rem; font-weight:700; margin-bottom:5px; color:var(--charcoal);">DATE OF INCIDENT</label>
+        <input type="date" id="jDate" style="width:100%; padding:12px; margin-bottom:15px;">
+        <label style="display:block; font-size:0.85rem; font-weight:700; margin-bottom:5px; color:var(--charcoal);">AGGRESSOR / MANAGER NAME</label>
+        <input type="text" id="jName" style="width:100%; padding:12px; margin-bottom:15px;" placeholder="Who committed the action?">
+        <label style="display:block; font-size:0.85rem; font-weight:700; margin-bottom:5px; color:var(--charcoal);">DESCRIPTION OF EVENT / THREAT</label>
+        <textarea id="jDesc" style="width:100%; padding:12px; margin-bottom:15px; min-height:80px;" placeholder="Exact quotes if possible..."></textarea>
+        <label style="display:block; font-size:0.85rem; font-weight:700; margin-bottom:5px; color:var(--charcoal);">WITNESSES (IF ANY)</label>
+        <input type="text" id="jWit" style="width:100%; padding:12px; margin-bottom:15px;" placeholder="Names of others present">
     `;
     createModalOverlay("LOG CONTEMPORANEOUS INCIDENT", html, () => {
         const date = document.getElementById('jDate').value;
@@ -209,15 +209,15 @@ function openJournalModal() {
 
 function openRadarModal() {
     const html = `
-        <label style="display:block; font-size:0.8rem; font-weight:700; margin-bottom:5px;">TYPE OF EVENT</label>
-        <select id="rType" style="width:100%; padding:10px; border:1px solid #ccc; margin-bottom:15px; font-family:inherit;">
+        <label style="display:block; font-size:0.85rem; font-weight:700; margin-bottom:5px; color:var(--charcoal);">TYPE OF EVENT</label>
+        <select id="rType" style="width:100%; padding:12px; margin-bottom:15px;">
             <option value="protected">Protected Activity (e.g., Reported HR, Requested FMLA)</option>
             <option value="adverse">Adverse Action (e.g., Demotion, Written Warning, Fired)</option>
         </select>
-        <label style="display:block; font-size:0.8rem; font-weight:700; margin-bottom:5px;">DATE OF EVENT</label>
-        <input type="date" id="rDate" style="width:100%; padding:10px; border:1px solid #ccc; margin-bottom:15px; font-family:inherit;">
-        <label style="display:block; font-size:0.8rem; font-weight:700; margin-bottom:5px;">DESCRIPTION</label>
-        <input type="text" id="rDesc" style="width:100%; padding:10px; border:1px solid #ccc; margin-bottom:15px; font-family:inherit;" placeholder="Brief description...">
+        <label style="display:block; font-size:0.85rem; font-weight:700; margin-bottom:5px; color:var(--charcoal);">DATE OF EVENT</label>
+        <input type="date" id="rDate" style="width:100%; padding:12px; margin-bottom:15px;">
+        <label style="display:block; font-size:0.85rem; font-weight:700; margin-bottom:5px; color:var(--charcoal);">DESCRIPTION</label>
+        <input type="text" id="rDesc" style="width:100%; padding:12px; margin-bottom:15px;" placeholder="Brief description...">
     `;
     createModalOverlay("LOG RADAR EVENT", html, () => {
         const type = document.getElementById('rType').value;
@@ -231,11 +231,11 @@ function openRadarModal() {
 
 function openVaultModal() {
     const html = `
-        <p style="font-size:0.85rem; color:var(--charcoal-light); margin-bottom:15px;">Secure external evidence before IT severs your network access.</p>
-        <label style="display:block; font-size:0.8rem; font-weight:700; margin-bottom:5px;">SELECT LOCAL FILE / SCREENSHOT</label>
-        <input type="file" id="vFile" style="width:100%; padding:10px; border:1px dashed #ccc; margin-bottom:15px; font-family:inherit;">
-        <label style="display:block; font-size:0.8rem; font-weight:700; margin-bottom:5px;">EXHIBIT DESCRIPTION</label>
-        <input type="text" id="vDesc" style="width:100%; padding:10px; border:1px solid #ccc; margin-bottom:15px; font-family:inherit;" placeholder="e.g., 2024 Performance Review showing 5/5">
+        <p style="font-size:0.9rem; color:var(--charcoal-light); margin-bottom:20px;">Secure external evidence before IT severs your network access.</p>
+        <label style="display:block; font-size:0.85rem; font-weight:700; margin-bottom:5px; color:var(--charcoal);">SELECT LOCAL FILE / SCREENSHOT</label>
+        <input type="file" id="vFile" style="width:100%; padding:12px; margin-bottom:15px;">
+        <label style="display:block; font-size:0.85rem; font-weight:700; margin-bottom:5px; color:var(--charcoal);">EXHIBIT DESCRIPTION</label>
+        <input type="text" id="vDesc" style="width:100%; padding:12px; margin-bottom:15px;" placeholder="e.g., 2024 Performance Review showing 5/5">
     `;
     createModalOverlay("SECURE OFF-GRID EVIDENCE", html, () => {
         const fileInput = document.getElementById('vFile');
@@ -292,7 +292,7 @@ function openDocumentEngine() {
                 </div>
             </div>
         </div>
-        <p style="font-size: 0.8rem; color: var(--charcoal-light); text-align: center; margin-top: 10px;">This visualizer demonstrates how X-HR translates raw logs into standard civil procedure formatting.</p>
+        <p style="font-size: 0.85rem; color: var(--charcoal-light); text-align: center; margin-top: 15px;">This visualizer demonstrates how X-HR translates raw logs into standard civil procedure formatting.</p>
     `;
 
     createModalOverlay("PRO SE DOCUMENT ASSEMBLER", html, null, true);
