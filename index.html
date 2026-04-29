@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>X-HR | Employee Defense Matrix</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     
     <link rel="stylesheet" href="style.css">
     
@@ -26,10 +26,28 @@
         <button class="btn-splash" onclick="document.getElementById('splashScreen').classList.add('hidden')">INITIALIZE COUNTER-MEASURE</button>
     </div>
 
-    <div class="header">
-        <img src="x-hr.png (512).png" alt="X-HR Shield" style="width: 240px; display: block; margin: 0 auto 20px auto; border-radius: 12px;">
-        <h1>X-HR</h1>
-        <p>Proactive Employee Defense Systems</p>
+    <div class="header-dark">
+        <div class="shield-wrapper">
+            <div class="shield-glow"></div>
+            <img src="x-hr.png (512).png" alt="X-HR Shield" class="shield-img">
+        </div>
+        
+        <h1>X<span class="emerald-dot">⬩</span>HR</h1>
+        <p class="subtitle">PROACTIVE EMPLOYEE DEFENSE SYSTEMS</p>
+        
+        <div class="header-divider">
+            <div class="line"></div>
+            <div class="shield-icon">🛡️</div>
+            <div class="line"></div>
+        </div>
+        
+        <p class="mission-text">Document everything. Control the narrative.<br>Your defense starts <span class="text-green">before</span> the conflict.</p>
+        
+        <button class="btn-dossier" id="btn-export-dossier">
+            <span class="btn-icon">📄</span> 
+            BUILD DEFENSE DOSSIER 
+            <span class="btn-arrow">›</span>
+        </button>
     </div>
 
     <div class="module-grid">
