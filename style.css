@@ -5,6 +5,7 @@
     --charcoal: #333333;
     --charcoal-light: #555555;
     --accent-warm: #EAE6DF;
+    --emerald: #065F46; /* High-end corporate emerald */
 }
 
 * { 
@@ -19,6 +20,7 @@ body {
     font-family: 'Inter', sans-serif; 
     padding: 20px;
     line-height: 1.6;
+    border-top: 8px solid var(--emerald); /* Corporate letterhead strike */
 }
 
 /* --- SPLASH SCREEN --- */
@@ -36,7 +38,6 @@ body {
     align-items: center;
     z-index: 9999;
     text-align: center;
-    /* Pushes the center of gravity 15% higher to clear mobile navigation bars */
     padding: 20px 20px 15vh 20px; 
     transition: opacity 0.5s ease;
 }
@@ -49,7 +50,7 @@ body {
 .splash-mission {
     font-size: 1.1rem;
     line-height: 1.6;
-    margin-bottom: 40px; /* Increased to give the button more breathing room */
+    margin-bottom: 40px;
     max-width: 500px;
     color: #cccccc;
 }
@@ -62,10 +63,11 @@ body {
     letter-spacing: 1px;
 }
 
+/* Splash Button gets an emerald outline */
 .btn-splash {
     background-color: transparent;
     color: var(--bg-warm-white);
-    border: 2px solid var(--bg-warm-white);
+    border: 2px solid var(--emerald);
     padding: 15px 30px;
     font-size: 1rem;
     font-weight: 700;
@@ -75,16 +77,17 @@ body {
 }
 
 .btn-splash:hover {
-    background-color: var(--bg-warm-white);
-    color: var(--charcoal);
+    background-color: var(--emerald);
+    color: #ffffff;
+    box-shadow: 0 4px 15px rgba(6, 95, 70, 0.4);
 }
 
 /* --- HEADER & INSIGNIA --- */
 .header {
     text-align: center;
-    border-bottom: 2px solid var(--charcoal);
-    padding-bottom: 20px;
+    padding-bottom: 10px;
     margin-bottom: 30px;
+    position: relative;
 }
 
 .header h1 {
@@ -101,6 +104,17 @@ body {
     color: var(--charcoal-light);
     letter-spacing: 1px;
     text-transform: uppercase;
+}
+
+/* The Emerald Anchor beneath the header */
+.header::after {
+    content: '';
+    display: block;
+    width: 80px;
+    height: 4px;
+    background-color: var(--emerald);
+    margin: 20px auto 0 auto;
+    border-radius: 2px;
 }
 
 /* --- TACTICAL GRID --- */
@@ -142,7 +156,7 @@ body {
     width: 100%;
     background-color: var(--charcoal);
     color: #FFFFFF;
-    border: none;
+    border: 2px solid var(--charcoal);
     padding: 15px;
     font-size: 1rem;
     font-weight: 700;
@@ -151,10 +165,12 @@ body {
     transition: all 0.2s ease;
 }
 
+/* The Kinetic Emerald Strike on Hover/Tap */
 .btn-charcoal:hover {
-    background-color: #000000;
+    background-color: var(--emerald);
+    border-color: var(--emerald);
     transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    box-shadow: 0 4px 12px rgba(6, 95, 70, 0.25);
 }
 
 /* --- DYNAMIC UI INJECTIONS --- */
@@ -165,7 +181,7 @@ input, select, textarea {
 
 input:focus, select:focus, textarea:focus {
     outline: none;
-    border-color: var(--charcoal) !important;
+    border-color: var(--emerald) !important; /* Highlights active inputs in emerald */
 }
 
 /* --- PRO SE DOCUMENT ENGINE (PLEADING PAPER) --- */
