@@ -1,10 +1,10 @@
-/* --- X-HR MASTER STYLESHEET (TIER-1 PREMIUM UPGRADE) --- */
+/* --- X-HR MASTER STYLESHEET (TIER-1 TACTICAL UPGRADE) --- */
 
 :root {
     --bg-gradient: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
     --charcoal: #1f2937;
     --charcoal-light: #4b5563;
-    --emerald: #065F46; 
+    --emerald: #10b981; 
     --card-bg: #ffffff;
 }
 
@@ -59,14 +59,17 @@ body {
 }
 
 .splash-mission strong {
+    font-family: 'Inter', sans-serif;
     color: #ffffff;
-    font-size: 1.3rem;
+    font-size: 1.4rem;
+    font-weight: 800;
     display: block;
     margin-bottom: 15px;
-    letter-spacing: 1px;
+    letter-spacing: 0.5px;
 }
 
 .btn-splash {
+    font-family: 'Inter', sans-serif;
     background-color: transparent;
     color: #ffffff;
     border: 2px solid var(--emerald);
@@ -82,37 +85,151 @@ body {
 
 .btn-splash:hover {
     background-color: var(--emerald);
-    box-shadow: 0 4px 20px rgba(6, 95, 70, 0.5);
+    box-shadow: 0 4px 20px rgba(16, 185, 129, 0.5);
     transform: translateY(-2px);
 }
 
-/* --- HEADER & INSIGNIA --- */
-.header {
+/* --- TACTICAL DARK HEADER --- */
+.header-dark {
+    background: linear-gradient(180deg, #0b1117 0%, #151e27 100%);
+    border-radius: 16px;
+    padding: 40px 20px 30px 20px;
     text-align: center;
-    background: var(--card-bg);
-    padding: 40px 20px;
-    border-radius: 12px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-    margin-bottom: 40px;
+    color: #ffffff;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+    margin: 0 auto 40px auto;
     max-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid #1f2d3a;
 }
 
-.header h1 {
-    font-size: 2.5rem;
+.header-dark::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background-image: radial-gradient(#ffffff 1px, transparent 1px);
+    background-size: 30px 30px;
+    opacity: 0.03;
+    z-index: 0;
+}
+
+.shield-wrapper {
+    position: relative;
+    display: inline-block;
+    margin-bottom: 20px;
+    z-index: 2;
+}
+
+.shield-glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 120px;
+    height: 120px;
+    background: radial-gradient(circle, rgba(16,185,129,0.8) 0%, rgba(16,185,129,0) 70%);
+    transform: translate(-50%, -50%);
+    z-index: -1;
+    filter: blur(15px);
+}
+
+.shield-img {
+    width: 150px;
+    position: relative;
+    z-index: 2;
+}
+
+.header-dark h1 {
+    font-family: 'Inter', sans-serif;
+    font-size: 3.2rem;
+    font-weight: 900;
+    letter-spacing: 2px;
+    margin-bottom: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    z-index: 2;
+    position: relative;
+}
+
+.emerald-dot {
+    color: var(--emerald);
+    font-size: 2rem;
+}
+
+.subtitle {
+    font-size: 0.8rem;
     font-weight: 700;
     letter-spacing: 2px;
-    color: var(--charcoal);
-    margin-bottom: 5px;
+    color: #9ca3af;
+    margin-bottom: 20px;
+    z-index: 2;
+    position: relative;
 }
 
-.header p {
+.header-divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+    opacity: 0.6;
+    z-index: 2;
+    position: relative;
+}
+
+.header-divider .line {
+    height: 1px;
+    width: 40px;
+    background: linear-gradient(90deg, transparent, var(--emerald), transparent);
+}
+
+.header-divider .shield-icon {
+    font-size: 0.9rem;
+    filter: grayscale(100%) brightness(150%);
+}
+
+.mission-text {
+    font-size: 0.9rem;
+    color: #d1d5db;
+    margin-bottom: 30px;
+    line-height: 1.6;
+    z-index: 2;
+    position: relative;
+}
+
+.text-green {
+    color: var(--emerald);
+    font-weight: 700;
+}
+
+.btn-dossier {
+    background: rgba(16, 185, 129, 0.1);
+    border: 1px solid rgba(16, 185, 129, 0.4);
+    color: #ffffff;
+    padding: 16px 24px;
+    border-radius: 8px;
+    width: 100%;
+    font-family: 'Inter', sans-serif;
     font-size: 0.95rem;
-    font-weight: 500;
-    color: var(--charcoal-light);
+    font-weight: 700;
     letter-spacing: 1px;
-    text-transform: uppercase;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.3s ease;
+    box-shadow: inset 0 0 15px rgba(16,185,129,0.2), 0 4px 15px rgba(0,0,0,0.2);
+    z-index: 2;
+    position: relative;
+}
+
+.btn-dossier:hover {
+    background: rgba(16, 185, 129, 0.3);
+    border: 1px solid var(--emerald);
+    box-shadow: inset 0 0 20px rgba(16,185,129,0.3), 0 0 20px rgba(16,185,129,0.2);
+    transform: translateY(-2px);
 }
 
 /* --- TACTICAL GRID --- */
@@ -151,10 +268,12 @@ body {
 }
 
 .card h3 {
+    font-family: 'Inter', sans-serif;
     font-size: 1.3rem;
-    font-weight: 700;
+    font-weight: 800;
     margin-bottom: 12px;
     color: var(--charcoal);
+    letter-spacing: -0.5px;
 }
 
 .card p {
@@ -166,6 +285,7 @@ body {
 
 /* --- ACTION BUTTONS --- */
 .btn-charcoal {
+    font-family: 'Inter', sans-serif;
     width: 100%;
     background-color: var(--charcoal);
     color: #FFFFFF;
@@ -178,12 +298,13 @@ body {
     cursor: pointer;
     transition: all 0.3s ease;
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    text-transform: uppercase;
 }
 
 .btn-charcoal:hover {
     background-color: var(--emerald);
     transform: translateY(-2px);
-    box-shadow: 0 8px 15px rgba(6, 95, 70, 0.25);
+    box-shadow: 0 8px 15px rgba(16, 185, 129, 0.25);
 }
 
 /* --- DYNAMIC UI INJECTIONS --- */
@@ -199,7 +320,7 @@ input:focus, select:focus, textarea:focus {
     outline: none;
     border-color: var(--emerald) !important;
     background-color: #ffffff;
-    box-shadow: 0 0 0 3px rgba(6, 95, 70, 0.1);
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
 }
 
 /* --- PRO SE DOCUMENT ENGINE (PLEADING PAPER) --- */
