@@ -41,7 +41,6 @@ function injectUIComponents() {
 }
 
 function wireButtons() {
-    // Only target buttons inside the cards
     const buttons = document.querySelectorAll('.card .btn-charcoal');
     if(buttons.length >= 3) {
         buttons[0].addEventListener('click', openJournalModal);
@@ -202,7 +201,7 @@ function generateHRDossier() {
     setTimeout(() => { document.body.removeChild(a); window.URL.revokeObjectURL(url); }, 100);
 }
 
-// --- 7. PRO SE DOCUMENT ENGINE ---
+// --- 7. PRO SE DOCUMENT ENGINE (UPDATED TO REFERENCE) ---
 function openDocumentEngine() {
     let lines = '';
     for(let i = 1; i <= 28; i++) { lines += i + '<br>'; }
@@ -227,8 +226,8 @@ function openDocumentEngine() {
                 </div>
             </div>
         </div>
-        <p style="font-size: 0.85rem; color: #9ca3af; text-align: center; margin-top: 15px;">Cold, clinical, court-ready formatting. Do not give them a technicality.</p>
+        <p style="font-size: 0.85rem; color: #9ca3af; text-align: center; margin-top: 15px;">*Disclaimer: This visualizer is a structural reference tool for organizing factual data, not legal advice.</p>
     `;
 
-    createModalOverlay("PRO SE DOCUMENT ASSEMBLER", html, null, true);
+    createModalOverlay("STRUCTURED DATA REFERENCE", html, null, true);
 }
