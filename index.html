@@ -14,6 +14,18 @@
 </head>
 <body>
 
+    <div id="splashScreen" class="splash-screen">
+        <img src="x-hr.png (512).png" alt="X-HR Shield" style="width: 180px; margin-bottom: 30px;">
+        <p class="splash-mission">
+            <strong>HR PROTECTS THE COMPANY.<br>X-HR PREPARES YOU FOR THE FIGHT.</strong>
+            They expect you to be a casualty. Be a consequence.<br>
+            The system relies on your silence. We rely on your receipts.<br><br>
+            Build the timeline. Secure the evidence.<br>
+            Bring the fight they didn't think you would bring.
+        </p>
+        <button class="btn-splash" onclick="document.getElementById('splashScreen').classList.add('hidden')">INITIALIZE COUNTER-MEASURE</button>
+    </div>
+
     <div class="header">
         <img src="x-hr.png (512).png" alt="X-HR Shield" style="width: 240px; display: block; margin: 0 auto 20px auto; border-radius: 12px;">
         <h1>X-HR</h1>
@@ -38,6 +50,12 @@
             <h3>Off-Grid Evidence Vault</h3>
             <p>Secure screenshots of glowing performance reviews and internal communications before corporate IT severs your server access.</p>
             <button class="btn-charcoal">SECURE EVIDENCE</button>
+        </div>
+
+        <div class="card">
+            <h3>Pro Se Document Engine</h3>
+            <p>Compile your journal entries, evidence, and causal gap calculations into formal, court-ready pleading paper. Do not give them a technicality.</p>
+            <button class="btn-charcoal" id="btn-doc-engine">GENERATE PLEADING PAPER</button>
         </div>
         
     </div>
