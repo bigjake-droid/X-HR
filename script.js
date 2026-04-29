@@ -1,5 +1,4 @@
 // --- 1. STATE MANAGEMENT (X-HR ISOLATED STORAGE) ---
-// We use a unique key so it never overwrites your CaseForge or Ledger data.
 let state = {
     incidents: [], 
     radar: {
@@ -20,7 +19,6 @@ window.onload = () => {
 };
 
 function injectUIComponents() {
-    // 1. Inject an Export Button into the header
     const header = document.querySelector('.header');
     if(header) {
         const exportBtn = document.createElement('button');
@@ -32,24 +30,26 @@ function injectUIComponents() {
         header.appendChild(exportBtn);
     }
 
-    // 2. Inject Display Containers into the existing HTML Cards
     const cards = document.querySelectorAll('.card');
-    if(cards.length >= 3) {
+    if(cards.length >= 4) {
         cards.forEach((card, index) => {
-            const displayArea = document.createElement('div');
-            displayArea.id = `displayArea-${index}`;
-            displayArea.style.cssText = "margin-top: 20px; border-top: 1px solid var(--charcoal-light); padding-top: 15px;";
-            card.appendChild(displayArea);
+            if(index < 3) { // Only inject display areas for the first 3 modules
+                const displayArea = document.createElement('div');
+                displayArea.id = `displayArea-${index}`;
+                displayArea.style.cssText = "margin-top: 20px; border-top: 1px solid var(--charcoal-light); padding-top: 15px;";
+                card.appendChild(displayArea);
+            }
         });
     }
 }
 
 function wireButtons() {
     const buttons = document.querySelectorAll('.btn-charcoal');
-    if(buttons.length >= 3) {
+    if(buttons.length >= 4) {
         buttons[0].addEventListener('click', openJournalModal);
         buttons[1].addEventListener('click', openRadarModal);
         buttons[2].addEventListener('click', openVaultModal);
+        buttons[3].addEventListener('click', openDocumentEngine);
     }
 }
 
@@ -60,7 +60,7 @@ function logIncident(date, aggressor, desc, witnesses) {
         aggressor: aggressor, 
         desc: desc, 
         witnesses: witnesses || "None",
-        loggedAt: new Date().toLocaleString() // The crucial "contemporaneous" timestamp
+        loggedAt: new Date().toLocaleString()
     });
     saveData();
     updateUI();
@@ -105,7 +105,6 @@ function loadData() {
 }
 
 function updateUI() {
-    // Update Journal (Card 0)
     const journalArea = document.getElementById('displayArea-0');
     if(journalArea) {
         if(state.incidents.length === 0) {
@@ -120,12 +119,9 @@ function updateUI() {
         }
     }
 
-    // Update Radar (Card 1)
     const radarArea = document.getElementById('displayArea-1');
     if(radarArea) {
         let radarHTML = '';
-        
-        // Causal Gap Math Engine
         if(state.radar.protectedActs.length > 0 && state.radar.adverseActions.length > 0) {
             const firstProtected = new Date(state.radar.protectedActs[0].date);
             const firstAdverse = new Date(state.radar.adverseActions[0].date);
@@ -140,7 +136,6 @@ function updateUI() {
                 </div>`;
             }
         }
-
         radarHTML += `<div style="display:flex; gap:10px;">`;
         radarHTML += `<div style="flex:1;"><strong>Protected Acts (${state.radar.protectedActs.length})</strong></div>`;
         radarHTML += `<div style="flex:1;"><strong>Adverse Actions (${state.radar.adverseActions.length})</strong></div>`;
@@ -148,7 +143,6 @@ function updateUI() {
         radarArea.innerHTML = radarHTML;
     }
 
-    // Update Vault (Card 2)
     const vaultArea = document.getElementById('displayArea-2');
     if(vaultArea) {
         if(state.evidence.length === 0) {
@@ -165,7 +159,7 @@ function updateUI() {
 }
 
 // --- 5. TACTICAL MODALS ---
-function createModalOverlay(title, innerHTML, onSave) {
+function createModalOverlay(title, innerHTML, onSave, hideSave = false) {
     const existing = document.getElementById('xhrModal');
     if(existing) existing.remove();
 
@@ -173,31 +167,32 @@ function createModalOverlay(title, innerHTML, onSave) {
     overlay.id = 'xhrModal';
     overlay.style.cssText = "position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(250, 250, 250, 0.95); display:flex; justify-content:center; align-items:center; z-index:1000; padding:20px;";
     
+    let buttonsHTML = `<button onclick="document.getElementById('xhrModal').remove()" style="flex:1; padding:12px; background:transparent; border:2px solid var(--charcoal); color:var(--charcoal); font-weight:700; cursor:pointer;">${hideSave ? 'CLOSE' : 'CANCEL'}</button>`;
+    if(!hideSave) {
+        buttonsHTML += `<button id="modalSaveBtn" style="flex:1; padding:12px; background:var(--charcoal); border:2px solid var(--charcoal); color:#fff; font-weight:700; cursor:pointer;">SAVE TO RECORD</button>`;
+    }
+
     overlay.innerHTML = `
-        <div style="background:#fff; border:2px solid var(--charcoal); padding:30px; width:100%; max-width:500px; border-radius:8px; box-shadow: 4px 4px 0px var(--accent-warm);">
+        <div style="background:#fff; border:2px solid var(--charcoal); padding:30px; width:100%; max-width:600px; border-radius:8px; box-shadow: 4px 4px 0px var(--accent-warm); max-height: 90vh; overflow-y: auto;">
             <h3 style="font-size:1.5rem; border-bottom:2px solid var(--charcoal); padding-bottom:10px; margin-bottom:20px;">${title}</h3>
             ${innerHTML}
             <div style="display:flex; gap:10px; margin-top:25px;">
-                <button onclick="document.getElementById('xhrModal').remove()" style="flex:1; padding:12px; background:transparent; border:2px solid var(--charcoal); color:var(--charcoal); font-weight:700; cursor:pointer;">CANCEL</button>
-                <button id="modalSaveBtn" style="flex:1; padding:12px; background:var(--charcoal); border:2px solid var(--charcoal); color:#fff; font-weight:700; cursor:pointer;">SAVE TO RECORD</button>
+                ${buttonsHTML}
             </div>
         </div>
     `;
     document.body.appendChild(overlay);
-    document.getElementById('modalSaveBtn').addEventListener('click', onSave);
+    if(!hideSave) document.getElementById('modalSaveBtn').addEventListener('click', onSave);
 }
 
 function openJournalModal() {
     const html = `
         <label style="display:block; font-size:0.8rem; font-weight:700; margin-bottom:5px;">DATE OF INCIDENT</label>
         <input type="date" id="jDate" style="width:100%; padding:10px; border:1px solid #ccc; margin-bottom:15px; font-family:inherit;">
-        
         <label style="display:block; font-size:0.8rem; font-weight:700; margin-bottom:5px;">AGGRESSOR / MANAGER NAME</label>
         <input type="text" id="jName" style="width:100%; padding:10px; border:1px solid #ccc; margin-bottom:15px; font-family:inherit;" placeholder="Who committed the action?">
-        
         <label style="display:block; font-size:0.8rem; font-weight:700; margin-bottom:5px;">DESCRIPTION OF EVENT / THREAT</label>
         <textarea id="jDesc" style="width:100%; padding:10px; border:1px solid #ccc; margin-bottom:15px; font-family:inherit; min-height:80px;" placeholder="Exact quotes if possible..."></textarea>
-        
         <label style="display:block; font-size:0.8rem; font-weight:700; margin-bottom:5px;">WITNESSES (IF ANY)</label>
         <input type="text" id="jWit" style="width:100%; padding:10px; border:1px solid #ccc; margin-bottom:15px; font-family:inherit;" placeholder="Names of others present">
     `;
@@ -219,10 +214,8 @@ function openRadarModal() {
             <option value="protected">Protected Activity (e.g., Reported HR, Requested FMLA)</option>
             <option value="adverse">Adverse Action (e.g., Demotion, Written Warning, Fired)</option>
         </select>
-        
         <label style="display:block; font-size:0.8rem; font-weight:700; margin-bottom:5px;">DATE OF EVENT</label>
         <input type="date" id="rDate" style="width:100%; padding:10px; border:1px solid #ccc; margin-bottom:15px; font-family:inherit;">
-        
         <label style="display:block; font-size:0.8rem; font-weight:700; margin-bottom:5px;">DESCRIPTION</label>
         <input type="text" id="rDesc" style="width:100%; padding:10px; border:1px solid #ccc; margin-bottom:15px; font-family:inherit;" placeholder="Brief description...">
     `;
@@ -239,10 +232,8 @@ function openRadarModal() {
 function openVaultModal() {
     const html = `
         <p style="font-size:0.85rem; color:var(--charcoal-light); margin-bottom:15px;">Secure external evidence before IT severs your network access.</p>
-        
         <label style="display:block; font-size:0.8rem; font-weight:700; margin-bottom:5px;">SELECT LOCAL FILE / SCREENSHOT</label>
         <input type="file" id="vFile" style="width:100%; padding:10px; border:1px dashed #ccc; margin-bottom:15px; font-family:inherit;">
-        
         <label style="display:block; font-size:0.8rem; font-weight:700; margin-bottom:5px;">EXHIBIT DESCRIPTION</label>
         <input type="text" id="vDesc" style="width:100%; padding:10px; border:1px solid #ccc; margin-bottom:15px; font-family:inherit;" placeholder="e.g., 2024 Performance Review showing 5/5">
     `;
@@ -268,4 +259,41 @@ function generateHRDossier() {
     document.body.appendChild(a);
     a.click();
     setTimeout(() => { document.body.removeChild(a); window.URL.revokeObjectURL(url); }, 100);
+}
+
+// --- 7. PRO SE DOCUMENT ENGINE ---
+function openDocumentEngine() {
+    let lines = '';
+    for(let i = 1; i <= 28; i++) {
+        lines += i + '<br>';
+    }
+
+    let documentText = `<div style="text-align: center; font-weight: bold; text-decoration: underline; margin-bottom: 20px;">EXHIBIT 1: CONTEMPORANEOUS TIMELINE OF EVENTS</div>`;
+    
+    if (state.incidents.length === 0) {
+        documentText += `No incidents have been securely logged to the timeline yet.`;
+    } else {
+        const sortedIncidents = [...state.incidents].sort((a, b) => new Date(a.date) - new Date(b.date));
+        
+        sortedIncidents.forEach(inc => {
+            documentText += `<p style="text-indent: 0.5in; margin: 0;">On or about <strong>${inc.date}</strong>, the following action was taken by ${inc.aggressor}: "${inc.desc}" (Witnesses: ${inc.witnesses}). This entry was contemporaneously logged into the secure matrix on ${inc.loggedAt}.</p>`;
+        });
+    }
+
+    const html = `
+        <div class="pleading-paper-container">
+            <div class="pleading-paper">
+                <div class="line-numbers">${lines}</div>
+                <div class="pleading-content">
+                    <p><strong>NAME:</strong> USER<br>
+                    <strong>PRO SE LITIGANT</strong></p>
+                    <br><br>
+                    ${documentText}
+                </div>
+            </div>
+        </div>
+        <p style="font-size: 0.8rem; color: var(--charcoal-light); text-align: center; margin-top: 10px;">This visualizer demonstrates how X-HR translates raw logs into standard civil procedure formatting.</p>
+    `;
+
+    createModalOverlay("PRO SE DOCUMENT ASSEMBLER", html, null, true);
 }
