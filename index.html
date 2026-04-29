@@ -15,43 +15,41 @@
 <body>
 
     <div id="splashScreen" class="splash-screen">
-        <img src="x-hr.png (512).png" alt="X-HR Shield" style="width: 180px; margin-bottom: 30px;">
-        <p class="splash-mission">
-            <strong>HR PROTECTS THE COMPANY.<br>X-HR PREPARES YOU FOR THE FIGHT.</strong>
-            They expect you to be a casualty. Be a consequence.<br>
-            The system relies on your silence. We rely on your receipts.<br><br>
-            Build the timeline. Secure the evidence.<br>
-            Bring the fight they didn't think you would bring.
-        </p>
-        <button class="btn-splash" onclick="document.getElementById('splashScreen').classList.add('hidden')">INITIALIZE COUNTER-MEASURE</button>
-    </div>
-
-    <div class="header-dark">
-        <div class="shield-wrapper">
-            <div class="shield-glow"></div>
-            <img src="x-hr.png (512).png" alt="X-HR Shield" class="shield-img">
+        <div class="splash-container">
+            <div class="splash-shield-wrapper">
+                <div class="splash-glow"></div>
+                <img src="x-hr.png (512).png" alt="X-HR Shield" class="splash-img">
+            </div>
+            
+            <h1 class="splash-title">X<span class="text-emerald">♦</span>HR</h1>
+            <p class="splash-subtitle">PROACTIVE EMPLOYEE DEFENSE SYSTEMS</p>
+            
+            <div class="splash-divider">
+                <div class="splash-line"></div>
+                <div class="splash-icon">🛡️</div>
+                <div class="splash-line"></div>
+            </div>
+            
+            <p class="splash-text">
+                Document everything. Control the narrative.<br>
+                Your defense starts <span class="text-emerald">before</span> the conflict.
+            </p>
+            
+            <button class="btn-splash-dossier" onclick="document.getElementById('splashScreen').classList.add('hidden')">
+                <span class="btn-icon">📄</span> 
+                BUILD DEFENSE DOSSIER 
+                <span class="btn-arrow">›</span>
+            </button>
         </div>
-        
-        <h1>X<span class="emerald-dot">⬩</span>HR</h1>
-        <p class="subtitle">PROACTIVE EMPLOYEE DEFENSE SYSTEMS</p>
-        
-        <div class="header-divider">
-            <div class="line"></div>
-            <div class="shield-icon">🛡️</div>
-            <div class="line"></div>
-        </div>
-        
-        <p class="mission-text">Document everything. Control the narrative.<br>Your defense starts <span class="text-green">before</span> the conflict.</p>
-        
-        <button class="btn-dossier" id="btn-export-dossier">
-            <span class="btn-icon">📄</span> 
-            BUILD DEFENSE DOSSIER 
-            <span class="btn-arrow">›</span>
-        </button>
     </div>
 
     <div class="module-grid">
         
+        <div class="app-header">
+            <h2>X<span class="text-emerald">♦</span>HR COMMAND</h2>
+            <button id="btn-export-dossier" class="btn-export-small">EXPORT RECORD</button>
+        </div>
+
         <div class="card">
             <h3>Contemporaneous Journal</h3>
             <p>Log workplace incidents, verbal threats, and hostile actions the moment they happen. Secure your timeline before HR builds theirs.</p>
