@@ -16,23 +16,29 @@ window.onload = () => {
     injectUIComponents();
     wireButtons();
     updateUI();
-    
-    // Wire the new tactical dossier button from the dark header
-    const dossierBtn = document.getElementById('btn-export-dossier');
-    if(dossierBtn) {
-        dossierBtn.addEventListener('click', generateHRDossier);
-    }
 };
 
 function injectUIComponents() {
-    // Inject dynamic display areas into the bottom of the first 3 module cards
+    // Inject the Export button into the new dark header
+    const header = document.querySelector('.header-dark');
+    if(header) {
+        const exportBtn = document.createElement('button');
+        exportBtn.innerHTML = "⬇ EXPORT DEFENSE DOSSIER";
+        exportBtn.style.cssText = "margin-top: 20px; background: rgba(16, 185, 129, 0.1); border: 1px solid var(--emerald); color: var(--emerald); padding: 8px 15px; font-weight: 700; font-family: 'Inter', sans-serif; cursor: pointer; border-radius: 4px; transition: all 0.2s; font-size: 0.8rem; letter-spacing: 1px;";
+        exportBtn.onmouseover = () => { exportBtn.style.background = "var(--emerald)"; exportBtn.style.color = "#fff"; };
+        exportBtn.onmouseout = () => { exportBtn.style.background = "rgba(16, 185, 129, 0.1)"; exportBtn.style.color = "var(--emerald)"; };
+        exportBtn.onclick = generateHRDossier;
+        header.appendChild(exportBtn);
+    }
+
+    // Inject display areas for the first 3 modules
     const cards = document.querySelectorAll('.card');
     if(cards.length >= 4) {
         cards.forEach((card, index) => {
             if(index < 3) { 
                 const displayArea = document.createElement('div');
                 displayArea.id = `displayArea-${index}`;
-                displayArea.style.cssText = "margin-top: 20px; border-top: 1px solid #d1d5db; padding-top: 15px;";
+                displayArea.style.cssText = "margin-top: 20px; border-top: 1px solid #e5e7eb; padding-top: 15px;";
                 card.appendChild(displayArea);
             }
         });
@@ -101,22 +107,20 @@ function loadData() {
 }
 
 function updateUI() {
-    // Journal Update
     const journalArea = document.getElementById('displayArea-0');
     if(journalArea) {
         if(state.incidents.length === 0) {
             journalArea.innerHTML = `<p style="font-size:0.85rem; color:var(--charcoal-light);">No incidents logged.</p>`;
         } else {
             journalArea.innerHTML = state.incidents.slice(0,3).map(inc => `
-                <div style="margin-bottom: 10px; padding: 10px; background: #f9fafb; border-left: 3px solid var(--charcoal); border-radius: 4px;">
-                    <strong style="font-size:0.9rem;">${inc.date} | Aggressor: ${inc.aggressor}</strong>
-                    <p style="font-size:0.85rem; margin: 5px 0 0 0;">${inc.desc}</p>
+                <div style="margin-bottom: 10px; padding: 12px; background: #f9fafb; border-left: 3px solid var(--emerald); border-radius: 4px;">
+                    <strong style="font-size:0.9rem; color: var(--charcoal);">${inc.date} | Aggressor: ${inc.aggressor}</strong>
+                    <p style="font-size:0.85rem; margin: 5px 0 0 0; color: var(--charcoal-light);">${inc.desc}</p>
                 </div>
-            `).join('') + (state.incidents.length > 3 ? `<p style="font-size:0.8rem; text-align:center; font-weight: 700;">+${state.incidents.length - 3} more entries securely logged.</p>` : '');
+            `).join('') + (state.incidents.length > 3 ? `<p style="font-size:0.8rem; text-align:center; font-weight: 700; color: var(--emerald);">+${state.incidents.length - 3} more entries securely logged.</p>` : '');
         }
     }
 
-    // Radar Update
     const radarArea = document.getElementById('displayArea-1');
     if(radarArea) {
         let radarHTML = '';
@@ -134,14 +138,13 @@ function updateUI() {
                 </div>`;
             }
         }
-        radarHTML += `<div style="display:flex; gap:10px;">`;
-        radarHTML += `<div style="flex:1;"><strong>Protected Acts (${state.radar.protectedActs.length})</strong></div>`;
-        radarHTML += `<div style="flex:1;"><strong>Adverse Actions (${state.radar.adverseActions.length})</strong></div>`;
+        radarHTML += `<div style="display:flex; gap:10px; font-size: 0.85rem; color: var(--charcoal);">`;
+        radarHTML += `<div style="flex:1;"><strong>Protected Acts:</strong> ${state.radar.protectedActs.length}</div>`;
+        radarHTML += `<div style="flex:1;"><strong>Adverse Actions:</strong> ${state.radar.adverseActions.length}</div>`;
         radarHTML += `</div>`;
         radarArea.innerHTML = radarHTML;
     }
 
-    // Vault Update
     const vaultArea = document.getElementById('displayArea-2');
     if(vaultArea) {
         if(state.evidence.length === 0) {
@@ -149,8 +152,8 @@ function updateUI() {
         } else {
             vaultArea.innerHTML = state.evidence.map(ex => `
                 <div style="display:flex; justify-content:space-between; font-size:0.85rem; padding: 8px 0; border-bottom: 1px dashed #d1d5db;">
-                    <span><strong>${ex.id}:</strong> ${ex.desc}</span>
-                    <span style="color:var(--charcoal-light);">${ex.date}</span>
+                    <span><strong style="color: var(--emerald);">${ex.id}:</strong> ${ex.desc}</span>
+                    <span style="color:var(--charcoal-light); font-size: 0.75rem;">${ex.date}</span>
                 </div>
             `).join('');
         }
@@ -164,18 +167,18 @@ function createModalOverlay(title, innerHTML, onSave, hideSave = false) {
 
     const overlay = document.createElement('div');
     overlay.id = 'xhrModal';
-    overlay.style.cssText = "position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(31, 41, 55, 0.7); display:flex; justify-content:center; align-items:center; z-index:1000; padding:20px; backdrop-filter: blur(4px);";
+    overlay.style.cssText = "position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(13, 19, 26, 0.85); display:flex; justify-content:center; align-items:center; z-index:10000; padding:20px; backdrop-filter: blur(8px);";
     
-    let buttonsHTML = `<button onclick="document.getElementById('xhrModal').remove()" style="flex:1; padding:12px; background:transparent; border:2px solid var(--charcoal); color:var(--charcoal); font-weight:700; border-radius:6px; cursor:pointer;">${hideSave ? 'CLOSE' : 'CANCEL'}</button>`;
+    let buttonsHTML = `<button onclick="document.getElementById('xhrModal').remove()" style="flex:1; padding:12px; background:transparent; border:1px solid #4b5563; color:#d1d5db; font-weight:700; border-radius:6px; cursor:pointer; font-family:'Inter', sans-serif;">${hideSave ? 'CLOSE' : 'CANCEL'}</button>`;
     if(!hideSave) {
-        buttonsHTML += `<button id="modalSaveBtn" style="flex:1; padding:12px; background:var(--charcoal); border:none; color:#fff; font-weight:700; border-radius:6px; cursor:pointer;">SAVE TO RECORD</button>`;
+        buttonsHTML += `<button id="modalSaveBtn" style="flex:1; padding:12px; background:var(--emerald); border:none; color:#fff; font-weight:700; border-radius:6px; cursor:pointer; font-family:'Inter', sans-serif; box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);">SAVE TO RECORD</button>`;
     }
 
     overlay.innerHTML = `
-        <div style="background:#fff; border-radius:12px; padding:30px; width:100%; max-width:600px; box-shadow: 0 20px 40px rgba(0,0,0,0.2); max-height: 90vh; overflow-y: auto;">
-            <h3 style="font-size:1.5rem; border-bottom:2px solid #e5e7eb; padding-bottom:12px; margin-bottom:20px; color:var(--charcoal);">${title}</h3>
+        <div style="background:#1f2937; border: 1px solid #374151; border-radius:12px; padding:30px; width:100%; max-width:600px; box-shadow: 0 20px 40px rgba(0,0,0,0.5); max-height: 90vh; overflow-y: auto; color: #f9fafb;">
+            <h3 style="font-size:1.4rem; font-weight: 800; border-bottom:1px solid #374151; padding-bottom:12px; margin-bottom:20px; color:#fff;">${title}</h3>
             ${innerHTML}
-            <div style="display:flex; gap:10px; margin-top:25px;">
+            <div style="display:flex; gap:15px; margin-top:25px;">
                 ${buttonsHTML}
             </div>
         </div>
@@ -185,4 +188,114 @@ function createModalOverlay(title, innerHTML, onSave, hideSave = false) {
 }
 
 function openJournalModal() {
-    const html
+    const html = `
+        <label style="display:block; font-size:0.8rem; font-weight:700; margin-bottom:5px; color:#9ca3af; letter-spacing: 1px;">DATE OF INCIDENT</label>
+        <input type="date" id="jDate" style="width:100%; padding:12px; margin-bottom:15px; background: #111827; border: 1px solid #374151; color: #fff;">
+        <label style="display:block; font-size:0.8rem; font-weight:700; margin-bottom:5px; color:#9ca3af; letter-spacing: 1px;">AGGRESSOR / MANAGER NAME</label>
+        <input type="text" id="jName" style="width:100%; padding:12px; margin-bottom:15px; background: #111827; border: 1px solid #374151; color: #fff;" placeholder="Who committed the action?">
+        <label style="display:block; font-size:0.8rem; font-weight:700; margin-bottom:5px; color:#9ca3af; letter-spacing: 1px;">DESCRIPTION OF EVENT / THREAT</label>
+        <textarea id="jDesc" style="width:100%; padding:12px; margin-bottom:15px; min-height:100px; background: #111827; border: 1px solid #374151; color: #fff;" placeholder="Exact quotes if possible..."></textarea>
+        <label style="display:block; font-size:0.8rem; font-weight:700; margin-bottom:5px; color:#9ca3af; letter-spacing: 1px;">WITNESSES (IF ANY)</label>
+        <input type="text" id="jWit" style="width:100%; padding:12px; margin-bottom:15px; background: #111827; border: 1px solid #374151; color: #fff;" placeholder="Names of others present">
+    `;
+    createModalOverlay("LOG CONTEMPORANEOUS INCIDENT", html, () => {
+        const date = document.getElementById('jDate').value;
+        const name = document.getElementById('jName').value;
+        const desc = document.getElementById('jDesc').value;
+        const wit = document.getElementById('jWit').value;
+        if(!date || !desc) { alert("Date and Description are required for a valid record."); return; }
+        logIncident(date, name, desc, wit);
+        document.getElementById('xhrModal').remove();
+    });
+}
+
+function openRadarModal() {
+    const html = `
+        <label style="display:block; font-size:0.8rem; font-weight:700; margin-bottom:5px; color:#9ca3af; letter-spacing: 1px;">TYPE OF EVENT</label>
+        <select id="rType" style="width:100%; padding:12px; margin-bottom:15px; background: #111827; border: 1px solid #374151; color: #fff;">
+            <option value="protected">Protected Activity (e.g., Reported HR, Requested FMLA)</option>
+            <option value="adverse">Adverse Action (e.g., Demotion, Written Warning, Fired)</option>
+        </select>
+        <label style="display:block; font-size:0.8rem; font-weight:700; margin-bottom:5px; color:#9ca3af; letter-spacing: 1px;">DATE OF EVENT</label>
+        <input type="date" id="rDate" style="width:100%; padding:12px; margin-bottom:15px; background: #111827; border: 1px solid #374151; color: #fff;">
+        <label style="display:block; font-size:0.8rem; font-weight:700; margin-bottom:5px; color:#9ca3af; letter-spacing: 1px;">DESCRIPTION</label>
+        <input type="text" id="rDesc" style="width:100%; padding:12px; margin-bottom:15px; background: #111827; border: 1px solid #374151; color: #fff;" placeholder="Brief description...">
+    `;
+    createModalOverlay("LOG RADAR EVENT", html, () => {
+        const type = document.getElementById('rType').value;
+        const date = document.getElementById('rDate').value;
+        const desc = document.getElementById('rDesc').value;
+        if(!date || !desc) { alert("Date and Description required."); return; }
+        logRadarEvent(type, date, desc);
+        document.getElementById('xhrModal').remove();
+    });
+}
+
+function openVaultModal() {
+    const html = `
+        <p style="font-size:0.9rem; color:#d1d5db; margin-bottom:20px;">Secure external evidence before IT severs your network access.</p>
+        <label style="display:block; font-size:0.8rem; font-weight:700; margin-bottom:5px; color:#9ca3af; letter-spacing: 1px;">SELECT LOCAL FILE / SCREENSHOT</label>
+        <input type="file" id="vFile" style="width:100%; padding:12px; margin-bottom:15px; background: #111827; border: 1px solid #374151; color: #fff;">
+        <label style="display:block; font-size:0.8rem; font-weight:700; margin-bottom:5px; color:#9ca3af; letter-spacing: 1px;">EXHIBIT DESCRIPTION</label>
+        <input type="text" id="vDesc" style="width:100%; padding:12px; margin-bottom:15px; background: #111827; border: 1px solid #374151; color: #fff;" placeholder="e.g., 2024 Performance Review showing 5/5">
+    `;
+    createModalOverlay("SECURE OFF-GRID EVIDENCE", html, () => {
+        const fileInput = document.getElementById('vFile');
+        const desc = document.getElementById('vDesc').value;
+        let filename = "No file selected";
+        if(fileInput.files.length > 0) filename = fileInput.files[0].name;
+        if(!desc) { alert("Description is required to establish chain of custody."); return; }
+        logEvidence(filename, desc);
+        document.getElementById('xhrModal').remove();
+    });
+}
+
+// --- 6. DATA EXPORT ---
+function generateHRDossier() {
+    const reportData = JSON.stringify(state, null, 2);
+    const blob = new Blob([reportData], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = "XHR_Defense_Dossier.json";
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(() => { document.body.removeChild(a); window.URL.revokeObjectURL(url); }, 100);
+}
+
+// --- 7. PRO SE DOCUMENT ENGINE ---
+function openDocumentEngine() {
+    let lines = '';
+    for(let i = 1; i <= 28; i++) {
+        lines += i + '<br>';
+    }
+
+    let documentText = `<div style="text-align: center; font-weight: bold; text-decoration: underline; margin-bottom: 20px;">EXHIBIT 1: CONTEMPORANEOUS TIMELINE OF EVENTS</div>`;
+    
+    if (state.incidents.length === 0) {
+        documentText += `No incidents have been securely logged to the timeline yet.`;
+    } else {
+        const sortedIncidents = [...state.incidents].sort((a, b) => new Date(a.date) - new Date(b.date));
+        
+        sortedIncidents.forEach(inc => {
+            documentText += `<p style="text-indent: 0.5in; margin: 0;">On or about <strong>${inc.date}</strong>, the following action was taken by ${inc.aggressor}: "${inc.desc}" (Witnesses: ${inc.witnesses}). This entry was contemporaneously logged into the secure matrix on ${inc.loggedAt}.</p>`;
+        });
+    }
+
+    const html = `
+        <div class="pleading-paper-container">
+            <div class="pleading-paper">
+                <div class="line-numbers">${lines}</div>
+                <div class="pleading-content">
+                    <p><strong>NAME:</strong> USER<br>
+                    <strong>PRO SE LITIGANT</strong></p>
+                    <br><br>
+                    ${documentText}
+                </div>
+            </div>
+        </div>
+        <p style="font-size: 0.85rem; color: #9ca3af; text-align: center; margin-top: 15px;">This visualizer demonstrates how X-HR translates raw logs into standard civil procedure formatting.</p>
+    `;
+
+    createModalOverlay("PRO SE DOCUMENT ASSEMBLER", html, null, true);
+}
