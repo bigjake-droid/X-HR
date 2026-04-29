@@ -1,10 +1,10 @@
-/* --- X-HR MASTER STYLESHEET (TIER-1 TACTICAL UPGRADE) --- */
+/* --- X-HR MASTER STYLESHEET (TIER-1 PREMIUM UPGRADE) --- */
 
 :root {
     --bg-gradient: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
     --charcoal: #1f2937;
     --charcoal-light: #4b5563;
-    --emerald: #10b981; 
+    --emerald: #10b981; /* Shifted to the brighter tactical green */
     --card-bg: #ffffff;
 }
 
@@ -21,218 +21,173 @@ body {
     padding: 20px;
     line-height: 1.6;
     min-height: 100vh;
-    border-top: 8px solid var(--emerald);
 }
 
-/* --- SPLASH SCREEN --- */
-.splash-screen {
+/* --- TACTICAL SPLASH SCREEN (NEW) --- */
+.splash-tactical {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
+    top: 0; 
+    left: 0; 
+    width: 100%; 
     height: 100%;
-    background-color: rgba(31, 41, 55, 0.85); 
-    backdrop-filter: blur(12px); 
-    -webkit-backdrop-filter: blur(12px); 
-    color: #f9fafb;
+    background-color: #0d131a; /* Deep dark slate */
+    background-image: radial-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    background-size: 20px 20px;
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
     z-index: 9999;
-    text-align: center;
-    padding: 20px 20px 15vh 20px; 
-    transition: opacity 0.5s ease;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
 }
 
-.splash-screen.hidden {
+.splash-tactical.hidden {
     opacity: 0;
+    visibility: hidden;
     pointer-events: none;
 }
 
-.splash-mission {
-    font-size: 1.1rem;
-    line-height: 1.6;
-    margin-bottom: 40px;
-    max-width: 500px;
-    color: #e5e7eb;
-}
-
-.splash-mission strong {
-    font-family: 'Inter', sans-serif;
-    color: #ffffff;
-    font-size: 1.4rem;
-    font-weight: 800;
-    display: block;
-    margin-bottom: 15px;
-    letter-spacing: 0.5px;
-}
-
-.btn-splash {
-    font-family: 'Inter', sans-serif;
-    background-color: transparent;
-    color: #ffffff;
-    border: 2px solid var(--emerald);
-    padding: 15px 30px;
-    font-size: 1rem;
-    font-weight: 700;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-.btn-splash:hover {
-    background-color: var(--emerald);
-    box-shadow: 0 4px 20px rgba(16, 185, 129, 0.5);
-    transform: translateY(-2px);
-}
-
-/* --- TACTICAL DARK HEADER --- */
-.header-dark {
-    background: linear-gradient(180deg, #0b1117 0%, #151e27 100%);
-    border-radius: 16px;
-    padding: 40px 20px 30px 20px;
+.splash-content {
+    width: 100%;
+    max-width: 450px;
+    padding: 40px 20px;
     text-align: center;
-    color: #ffffff;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-    margin: 0 auto 40px auto;
-    max-width: 600px;
-    position: relative;
-    overflow: hidden;
-    border: 1px solid #1f2d3a;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-.header-dark::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background-image: radial-gradient(#ffffff 1px, transparent 1px);
-    background-size: 30px 30px;
-    opacity: 0.03;
-    z-index: 0;
+.shield-wrapper { 
+    position: relative; 
+    margin-bottom: 30px; 
 }
 
-.shield-wrapper {
-    position: relative;
-    display: inline-block;
-    margin-bottom: 20px;
-    z-index: 2;
-}
-
+/* The Emerald Backlight */
 .shield-glow {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 120px;
-    height: 120px;
-    background: radial-gradient(circle, rgba(16,185,129,0.8) 0%, rgba(16,185,129,0) 70%);
+    position: absolute; 
+    top: 50%; 
+    left: 50%; 
     transform: translate(-50%, -50%);
-    z-index: -1;
-    filter: blur(15px);
+    width: 150px; 
+    height: 150px;
+    background: radial-gradient(circle, rgba(16, 185, 129, 0.3) 0%, rgba(16, 185, 129, 0) 70%);
+    filter: blur(25px); 
+    z-index: 1;
 }
 
-.shield-img {
-    width: 150px;
-    position: relative;
-    z-index: 2;
+.shield-img { 
+    position: relative; 
+    z-index: 2; 
+    width: 180px; 
 }
 
-.header-dark h1 {
-    font-family: 'Inter', sans-serif;
-    font-size: 3.2rem;
+.splash-title {
+    font-family: 'Inter', sans-serif; 
+    font-size: 4.5rem; 
     font-weight: 900;
-    letter-spacing: 2px;
-    margin-bottom: 5px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 8px;
-    z-index: 2;
-    position: relative;
+    color: #ffffff; 
+    margin: 0; 
+    letter-spacing: -2px;
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    gap: 15px;
+    line-height: 1;
 }
 
-.emerald-dot {
-    color: var(--emerald);
-    font-size: 2rem;
+.emerald-diamond { 
+    color: var(--emerald); 
+    font-size: 2rem; 
+    transform: translateY(-5px); /* Perfectly aligns the diamond */
 }
 
-.subtitle {
-    font-size: 0.8rem;
+.splash-subtitle {
+    font-family: 'Inter', sans-serif; 
+    font-size: 0.8rem; 
     font-weight: 700;
-    letter-spacing: 2px;
-    color: #9ca3af;
-    margin-bottom: 20px;
-    z-index: 2;
-    position: relative;
+    color: #9ca3af; 
+    letter-spacing: 2px; 
+    margin: 15px 0 30px 0;
 }
 
-.header-divider {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    margin-bottom: 20px;
+.splash-divider {
+    display: flex; 
+    align-items: center; 
+    width: 50%; 
+    margin: 0 auto 30px auto; 
     opacity: 0.6;
-    z-index: 2;
-    position: relative;
 }
 
-.header-divider .line {
+.splash-divider .line {
+    flex-grow: 1; 
     height: 1px;
-    width: 40px;
     background: linear-gradient(90deg, transparent, var(--emerald), transparent);
 }
 
-.header-divider .shield-icon {
-    font-size: 0.9rem;
-    filter: grayscale(100%) brightness(150%);
+.splash-divider .shield-icon { 
+    font-size: 0.8rem; 
+    margin: 0 10px; 
+    filter: grayscale(1) brightness(1.5); 
 }
 
-.mission-text {
-    font-size: 0.9rem;
+.splash-mission-text {
+    font-family: 'Inter', sans-serif; 
+    font-size: 1rem; 
     color: #d1d5db;
-    margin-bottom: 30px;
-    line-height: 1.6;
-    z-index: 2;
-    position: relative;
+    line-height: 1.6; 
+    margin-bottom: 40px;
 }
 
-.text-green {
-    color: var(--emerald);
-    font-weight: 700;
+.splash-mission-text .text-green { 
+    color: var(--emerald); 
+    font-weight: 700; 
 }
 
-.btn-dossier {
-    background: rgba(16, 185, 129, 0.1);
-    border: 1px solid rgba(16, 185, 129, 0.4);
+/* The Glowing Tactical Button */
+.btn-splash-dossier {
+    background-color: rgba(6, 95, 70, 0.2); 
+    border: 1px solid rgba(16, 185, 129, 0.5);
     color: #ffffff;
-    padding: 16px 24px;
+    padding: 18px 24px;
     border-radius: 8px;
     width: 100%;
-    font-family: 'Inter', sans-serif;
-    font-size: 0.95rem;
+    font-family: 'Inter', sans-serif; 
+    font-size: 0.95rem; 
     font-weight: 700;
-    letter-spacing: 1px;
+    letter-spacing: 1px; 
     cursor: pointer;
-    display: flex;
-    justify-content: space-between;
+    display: flex; 
+    justify-content: space-between; 
     align-items: center;
+    box-shadow: inset 0 0 10px rgba(16, 185, 129, 0.1), 0 4px 15px rgba(0,0,0,0.4);
     transition: all 0.3s ease;
-    box-shadow: inset 0 0 15px rgba(16,185,129,0.2), 0 4px 15px rgba(0,0,0,0.2);
-    z-index: 2;
-    position: relative;
 }
 
-.btn-dossier:hover {
-    background: rgba(16, 185, 129, 0.3);
-    border: 1px solid var(--emerald);
-    box-shadow: inset 0 0 20px rgba(16,185,129,0.3), 0 0 20px rgba(16,185,129,0.2);
+.btn-splash-dossier:hover {
+    background-color: rgba(6, 95, 70, 0.4); 
+    border-color: var(--emerald);
+    box-shadow: inset 0 0 15px rgba(16, 185, 129, 0.3), 0 4px 20px rgba(16, 185, 129, 0.2);
     transform: translateY(-2px);
 }
 
-/* --- TACTICAL GRID --- */
+.btn-splash-dossier .icon-left { font-size: 1.2rem; opacity: 0.9; }
+.btn-splash-dossier .text-center { flex-grow: 1; text-align: center; }
+.btn-splash-dossier .icon-right { font-size: 1.4rem; font-weight: 900; opacity: 0.9; }
+
+/* --- MAIN APP STYLES (UNDER THE SPLASH SCREEN) --- */
+.header-dark {
+    text-align: center;
+    background: var(--charcoal);
+    padding: 30px 20px;
+    border-radius: 12px;
+    margin-bottom: 30px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    border-top: 4px solid var(--emerald);
+    color: #fff;
+}
+.header-dark h1 { font-size: 2.5rem; font-weight: 900; margin-bottom: 5px; letter-spacing: -1px; }
+
 .module-grid {
     display: grid;
     grid-template-columns: 1fr;
@@ -241,7 +196,6 @@ body {
     margin: 0 auto;
 }
 
-/* --- THE ELEVATED CARD SYSTEM --- */
 .card {
     background-color: var(--card-bg);
     border-radius: 12px;
@@ -268,12 +222,10 @@ body {
 }
 
 .card h3 {
-    font-family: 'Inter', sans-serif;
     font-size: 1.3rem;
     font-weight: 800;
     margin-bottom: 12px;
     color: var(--charcoal);
-    letter-spacing: -0.5px;
 }
 
 .card p {
@@ -283,9 +235,7 @@ body {
     line-height: 1.7;
 }
 
-/* --- ACTION BUTTONS --- */
 .btn-charcoal {
-    font-family: 'Inter', sans-serif;
     width: 100%;
     background-color: var(--charcoal);
     color: #FFFFFF;
@@ -298,7 +248,6 @@ body {
     cursor: pointer;
     transition: all 0.3s ease;
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    text-transform: uppercase;
 }
 
 .btn-charcoal:hover {
@@ -307,7 +256,6 @@ body {
     box-shadow: 0 8px 15px rgba(16, 185, 129, 0.25);
 }
 
-/* --- DYNAMIC UI INJECTIONS --- */
 input, select, textarea {
     border: 1px solid #d1d5db;
     border-radius: 6px;
@@ -323,7 +271,6 @@ input:focus, select:focus, textarea:focus {
     box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
 }
 
-/* --- PRO SE DOCUMENT ENGINE (PLEADING PAPER) --- */
 .pleading-paper-container {
     background: #d1d5db; 
     padding: 20px;
@@ -349,31 +296,15 @@ input:focus, select:focus, textarea:focus {
 }
 
 .pleading-paper::before {
-    content: '';
-    position: absolute;
-    top: 0; bottom: 0; left: 1in;
-    border-left: 2px solid #000;
+    content: ''; position: absolute; top: 0; bottom: 0; left: 1in; border-left: 2px solid #000;
 }
 .pleading-paper::after {
-    content: '';
-    position: absolute;
-    top: 0; bottom: 0; left: 1.05in;
-    border-left: 1px solid #000;
+    content: ''; position: absolute; top: 0; bottom: 0; left: 1.05in; border-left: 1px solid #000;
 }
 
 .line-numbers {
-    position: absolute;
-    top: 1in; 
-    left: 0.2in;
-    width: 0.6in;
-    text-align: right;
-    line-height: 2;
-    color: #000;
-    font-family: "Times New Roman", Times, serif;
-    font-size: 12pt;
+    position: absolute; top: 1in; left: 0.2in; width: 0.6in;
+    text-align: right; line-height: 2; color: #000; font-family: "Times New Roman", Times, serif; font-size: 12pt;
 }
 
-.pleading-content {
-    position: relative;
-    z-index: 10;
-}
+.pleading-content { position: relative; z-index: 10; }
