@@ -3,7 +3,7 @@ let state = {
     incidents: [], 
     radar: { protectedActs: [], adverseActions: [] },
     evidence: [],
-    boundaries: [] // The new offensive module
+    boundaries: [] 
 };
 
 const STORAGE_KEY = 'xhrDefenseState';
@@ -17,18 +17,18 @@ window.onload = () => {
 };
 
 function injectUIComponents() {
-    const header = document.querySelector('.header-dark');
+    const header = document.querySelector('.internal-header');
     if(header) {
         const exportBtn = document.createElement('button');
         exportBtn.innerHTML = "⬇ EXPORT DEFENSE DOSSIER";
-        exportBtn.style.cssText = "margin-top: 10px; background: rgba(16, 185, 129, 0.1); border: 1px solid var(--emerald); color: var(--emerald); padding: 8px 15px; font-weight: 700; font-family: 'Inter', sans-serif; cursor: pointer; border-radius: 4px; transition: all 0.2s; font-size: 0.8rem; letter-spacing: 1px;";
+        exportBtn.style.cssText = "margin-top: 15px; position: relative; z-index: 2; background: rgba(16, 185, 129, 0.1); border: 1px solid var(--emerald); color: var(--emerald); padding: 8px 15px; font-weight: 700; font-family: 'Inter', sans-serif; cursor: pointer; border-radius: 4px; transition: all 0.2s; font-size: 0.8rem; letter-spacing: 1px;";
         exportBtn.onmouseover = () => { exportBtn.style.background = "var(--emerald)"; exportBtn.style.color = "#fff"; };
         exportBtn.onmouseout = () => { exportBtn.style.background = "rgba(16, 185, 129, 0.1)"; exportBtn.style.color = "var(--emerald)"; };
         exportBtn.onclick = generateHRDossier;
         header.appendChild(exportBtn);
     }
 
-    // Inject display areas for the first 4 modules
+    // Inject display areas specifically into .card elements (ignoring the timeline)
     const cards = document.querySelectorAll('.card');
     if(cards.length >= 5) {
         cards.forEach((card, index) => {
@@ -43,13 +43,14 @@ function injectUIComponents() {
 }
 
 function wireButtons() {
-    const buttons = document.querySelectorAll('.btn-charcoal');
+    // Only target buttons inside the cards so we don't break indexing
+    const buttons = document.querySelectorAll('.card .btn-charcoal');
     if(buttons.length >= 5) {
         buttons[0].addEventListener('click', openJournalModal);
         buttons[1].addEventListener('click', openRadarModal);
         buttons[2].addEventListener('click', openVaultModal);
-        buttons[3].addEventListener('click', openBoundaryModal); // Module 4
-        buttons[4].addEventListener('click', openDocumentEngine); // Module 5
+        buttons[3].addEventListener('click', openBoundaryModal); 
+        buttons[4].addEventListener('click', openDocumentEngine); 
     }
 }
 
@@ -95,7 +96,6 @@ function loadData() {
 }
 
 function updateUI() {
-    // 0: Journal
     const journalArea = document.getElementById('displayArea-0');
     if(journalArea) {
         if(state.incidents.length === 0) {
@@ -110,7 +110,6 @@ function updateUI() {
         }
     }
 
-    // 1: Radar
     const radarArea = document.getElementById('displayArea-1');
     if(radarArea) {
         let radarHTML = '';
@@ -134,7 +133,6 @@ function updateUI() {
         radarArea.innerHTML = radarHTML;
     }
 
-    // 2: Vault
     const vaultArea = document.getElementById('displayArea-2');
     if(vaultArea) {
         if(state.evidence.length === 0) {
@@ -149,7 +147,6 @@ function updateUI() {
         }
     }
 
-    // 3: Boundaries
     const boundArea = document.getElementById('displayArea-3');
     if(boundArea) {
         if(state.boundaries.length === 0) {
