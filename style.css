@@ -1,4 +1,4 @@
-/* --- X-HR MASTER STYLESHEET (TIER-1 PREMIUM UPGRADE) --- */
+/* --- X-HR MASTER STYLESHEET (TIER-1 PREMIUM UPGRADE V4) --- */
 
 :root {
     --bg-gradient: linear-gradient(180deg, #0d131a 0%, #080c11 100%);
@@ -58,16 +58,16 @@ body {
     margin-bottom: 40px; 
 }
 
-/* BIGGER, WIDER EMERALD GLOW */
+/* MASSIVE EMERALD GLOW */
 .shield-glow {
     position: absolute; 
     top: 50%; 
     left: 50%; 
     transform: translate(-50%, -50%);
-    width: 250px; 
-    height: 250px;
-    background: radial-gradient(circle, rgba(16, 185, 129, 0.4) 0%, rgba(16, 185, 129, 0.1) 40%, transparent 70%);
-    filter: blur(35px); 
+    width: 300px; 
+    height: 300px;
+    background: radial-gradient(circle, rgba(16, 185, 129, 0.5) 0%, rgba(16, 185, 129, 0.15) 50%, transparent 70%);
+    filter: blur(40px); 
     z-index: 1;
 }
 
@@ -77,25 +77,26 @@ body {
     width: 180px; 
 }
 
-/* NEW TACTICAL FONT FOR TITLE */
+/* UNIFIED, GLOWING TITLE FONT */
 .splash-title {
     font-family: 'Rajdhani', sans-serif; 
-    font-size: 5rem; 
-    font-weight: 800;
+    font-size: 4.8rem; 
+    font-weight: 700; /* Pulled back slightly so it isn't overly heavy */
     color: #ffffff; 
     margin: 0; 
-    letter-spacing: -1px;
+    letter-spacing: 2px;
     display: flex; 
     align-items: center; 
     justify-content: center; 
-    gap: 15px;
     line-height: 1;
+    text-shadow: 0 0 20px rgba(16, 185, 129, 0.6); /* Unified glow across the whole word */
 }
 
-.emerald-diamond { 
+.emerald-circle { 
     color: var(--emerald); 
-    font-size: 2.2rem; 
-    transform: translateY(-4px); 
+    font-size: 1.8rem; 
+    margin: 0 12px;
+    text-shadow: 0 0 25px var(--emerald);
 }
 
 .splash-subtitle {
@@ -138,6 +139,7 @@ body {
 .splash-mission-text .text-green { 
     color: var(--emerald); 
     font-weight: 700; 
+    text-shadow: 0 0 10px rgba(16, 185, 129, 0.4);
 }
 
 .btn-splash-dossier {
@@ -182,29 +184,32 @@ body {
 }
 .header-dark h1 { 
     font-family: 'Rajdhani', sans-serif;
-    font-size: 3rem; 
-    font-weight: 800; 
+    font-size: 3.2rem; 
+    font-weight: 700; 
     margin-bottom: 5px; 
-    letter-spacing: 1px; 
+    letter-spacing: 2px; 
+    color: #ffffff;
+    text-shadow: 0 0 15px rgba(16, 185, 129, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-/* WIDER SPACING (FIXING CLAUSTROPHOBIA) */
 .module-grid {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 45px; /* Huge increase for breathing room */
+    gap: 45px; 
     max-width: 600px;
     margin: 0 auto;
     padding-bottom: 60px;
 }
 
-/* GLOWING DARK CARDS */
 .card {
     background-color: var(--card-bg);
     border-radius: 12px;
-    padding: 35px; /* More padding inside the box */
-    border: 2px solid rgba(16, 185, 129, 0.3); /* Medium Emerald Border */
-    box-shadow: 0 0 20px rgba(16, 185, 129, 0.1), inset 0 0 15px rgba(16, 185, 129, 0.05); /* Outer and Inner Glow */
+    padding: 35px; 
+    border: 2px solid rgba(16, 185, 129, 0.4); 
+    box-shadow: 0 0 25px rgba(16, 185, 129, 0.15), inset 0 0 15px rgba(16, 185, 129, 0.05); 
     position: relative;
     overflow: hidden;
     transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
@@ -212,8 +217,8 @@ body {
 
 .card:hover {
     transform: translateY(-3px);
-    border-color: rgba(16, 185, 129, 0.8);
-    box-shadow: 0 0 30px rgba(16, 185, 129, 0.2), inset 0 0 20px rgba(16, 185, 129, 0.1);
+    border-color: rgba(16, 185, 129, 0.9);
+    box-shadow: 0 0 35px rgba(16, 185, 129, 0.25), inset 0 0 20px rgba(16, 185, 129, 0.15);
 }
 
 .card h3 {
@@ -269,7 +274,6 @@ input:focus, select:focus, textarea:focus {
     box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
 }
 
-/* Document Assembler fixes for dark mode visibility */
 .pleading-paper-container {
     background: #1f2937; 
     padding: 20px;
