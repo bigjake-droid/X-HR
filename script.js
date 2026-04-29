@@ -1,9 +1,7 @@
 // --- 1. STATE MANAGEMENT (X-HR ISOLATED STORAGE) ---
 let state = {
     incidents: [], 
-    radar: { protectedActs: [], adverseActions: [] },
-    evidence: [],
-    boundaries: [] 
+    radar: { protectedActs: [], adverseActions: [] }
 };
 
 const STORAGE_KEY = 'xhrDefenseState';
@@ -28,11 +26,11 @@ function injectUIComponents() {
         header.appendChild(exportBtn);
     }
 
-    // Inject display areas specifically into .card elements (ignoring the timeline)
+    // Inject display areas specifically into the first two .card elements (Journal and Radar)
     const cards = document.querySelectorAll('.card');
-    if(cards.length >= 5) {
+    if(cards.length >= 3) {
         cards.forEach((card, index) => {
-            if(index < 4) { 
+            if(index < 2) { 
                 const displayArea = document.createElement('div');
                 displayArea.id = `displayArea-${index}`;
                 displayArea.style.cssText = "margin-top: 20px; border-top: 1px solid rgba(16, 185, 129, 0.3); padding-top: 20px;";
@@ -43,14 +41,12 @@ function injectUIComponents() {
 }
 
 function wireButtons() {
-    // Only target buttons inside the cards so we don't break indexing
+    // Only target buttons inside the cards
     const buttons = document.querySelectorAll('.card .btn-charcoal');
-    if(buttons.length >= 5) {
+    if(buttons.length >= 3) {
         buttons[0].addEventListener('click', openJournalModal);
         buttons[1].addEventListener('click', openRadarModal);
-        buttons[2].addEventListener('click', openVaultModal);
-        buttons[3].addEventListener('click', openBoundaryModal); 
-        buttons[4].addEventListener('click', openDocumentEngine); 
+        buttons[2].addEventListener('click', openDocumentEngine); 
     }
 }
 
@@ -72,17 +68,6 @@ function logRadarEvent(type, date, desc) {
     saveData(); updateUI();
 }
 
-function logEvidence(filename, desc) {
-    const exhibitLetter = String.fromCharCode(65 + state.evidence.length); 
-    state.evidence.push({ id: `Exhibit ${exhibitLetter}`, filename, desc, date: new Date().toLocaleDateString() });
-    saveData(); updateUI();
-}
-
-function logBoundary(date, aggressor, boundary, breach) {
-    state.boundaries.unshift({ date, aggressor, boundary, breach: breach || "None recorded yet.", loggedAt: new Date().toLocaleString() });
-    saveData(); updateUI();
-}
-
 // --- 4. DATA PERSISTENCE & UI UPDATES ---
 function saveData() { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
 
@@ -91,7 +76,6 @@ function loadData() {
     if(saved) {
         state = JSON.parse(saved);
         if(!state.radar) state.radar = { protectedActs: [], adverseActions: [] };
-        if(!state.boundaries) state.boundaries = [];
     }
 }
 
@@ -132,35 +116,6 @@ function updateUI() {
         radarHTML += `</div>`;
         radarArea.innerHTML = radarHTML;
     }
-
-    const vaultArea = document.getElementById('displayArea-2');
-    if(vaultArea) {
-        if(state.evidence.length === 0) {
-            vaultArea.innerHTML = `<p style="font-size:0.85rem; color:#6b7280;">No exhibits secured.</p>`;
-        } else {
-            vaultArea.innerHTML = state.evidence.slice(0,3).map(ex => `
-                <div style="display:flex; justify-content:space-between; font-size:0.85rem; padding: 8px 0; border-bottom: 1px dashed #374151;">
-                    <span style="color:#e5e7eb;"><strong style="color: #10b981;">${ex.id}:</strong> ${ex.desc}</span>
-                    <span style="color:#6b7280; font-size: 0.75rem;">${ex.date}</span>
-                </div>
-            `).join('');
-        }
-    }
-
-    const boundArea = document.getElementById('displayArea-3');
-    if(boundArea) {
-        if(state.boundaries.length === 0) {
-            boundArea.innerHTML = `<p style="font-size:0.85rem; color:#6b7280;">No boundaries established yet.</p>`;
-        } else {
-            boundArea.innerHTML = state.boundaries.slice(0,2).map(b => `
-                <div style="margin-bottom: 10px; padding: 12px; background: rgba(0,0,0,0.3); border-left: 3px solid #f59e0b; border-radius: 4px;">
-                    <strong style="font-size:0.9rem; color: #fff;">${b.date} | Target: ${b.aggressor}</strong>
-                    <p style="font-size:0.8rem; margin: 5px 0; color: #9ca3af;"><strong>Boundary:</strong> ${b.boundary}</p>
-                    <p style="font-size:0.8rem; margin: 0; color: #ef4444;"><strong>Breach:</strong> ${b.breach}</p>
-                </div>
-            `).join('');
-        }
-    }
 }
 
 // --- 5. TACTICAL MODALS ---
@@ -188,29 +143,6 @@ function createModalOverlay(title, innerHTML, onSave, hideSave = false) {
     `;
     document.body.appendChild(overlay);
     if(!hideSave) document.getElementById('modalSaveBtn').addEventListener('click', onSave);
-}
-
-function openBoundaryModal() {
-    const html = `
-        <p style="font-size:0.85rem; color:#9ca3af; margin-bottom:20px;">Use this to formally document when you told an aggressor to stop a specific behavior, and log if they crossed that line again.</p>
-        <label style="display:block; font-size:0.8rem; font-weight:700; margin-bottom:5px; color:#9ca3af; letter-spacing: 1px;">DATE BOUNDARY WAS SET</label>
-        <input type="date" id="bDate" style="width:100%; padding:12px; margin-bottom:15px;">
-        <label style="display:block; font-size:0.8rem; font-weight:700; margin-bottom:5px; color:#9ca3af; letter-spacing: 1px;">AGGRESSOR NAME</label>
-        <input type="text" id="bName" style="width:100%; padding:12px; margin-bottom:15px;" placeholder="Who was notified?">
-        <label style="display:block; font-size:0.8rem; font-weight:700; margin-bottom:5px; color:#9ca3af; letter-spacing: 1px;">WHAT WAS THE BOUNDARY?</label>
-        <textarea id="bBound" style="width:100%; padding:12px; margin-bottom:15px; min-height:70px;" placeholder="e.g., 'I told John to stop commenting on my physical appearance.'"></textarea>
-        <label style="display:block; font-size:0.8rem; font-weight:700; margin-bottom:5px; color:#9ca3af; letter-spacing: 1px;">ANY TRANSGRESSIONS? (OPTIONAL)</label>
-        <textarea id="bBreach" style="width:100%; padding:12px; margin-bottom:15px; min-height:70px;" placeholder="e.g., 'On Tuesday, he did it again.'"></textarea>
-    `;
-    createModalOverlay("PERIMETER DEFENSE LOG", html, () => {
-        const date = document.getElementById('bDate').value;
-        const name = document.getElementById('bName').value;
-        const bound = document.getElementById('bBound').value;
-        const breach = document.getElementById('bBreach').value;
-        if(!date || !bound) { alert("Date and Boundary description are required."); return; }
-        logBoundary(date, name, bound, breach);
-        document.getElementById('xhrModal').remove();
-    });
 }
 
 function openJournalModal() {
@@ -257,25 +189,6 @@ function openRadarModal() {
     });
 }
 
-function openVaultModal() {
-    const html = `
-        <p style="font-size:0.9rem; color:#d1d5db; margin-bottom:20px;">Secure external evidence before IT severs your network access.</p>
-        <label style="display:block; font-size:0.8rem; font-weight:700; margin-bottom:5px; color:#9ca3af; letter-spacing: 1px;">SELECT LOCAL FILE / SCREENSHOT</label>
-        <input type="file" id="vFile" style="width:100%; padding:12px; margin-bottom:15px;">
-        <label style="display:block; font-size:0.8rem; font-weight:700; margin-bottom:5px; color:#9ca3af; letter-spacing: 1px;">EXHIBIT DESCRIPTION</label>
-        <input type="text" id="vDesc" style="width:100%; padding:12px; margin-bottom:15px;" placeholder="e.g., 2024 Performance Review showing 5/5">
-    `;
-    createModalOverlay("SECURE OFF-GRID EVIDENCE", html, () => {
-        const fileInput = document.getElementById('vFile');
-        const desc = document.getElementById('vDesc').value;
-        let filename = "No file selected";
-        if(fileInput.files.length > 0) filename = fileInput.files[0].name;
-        if(!desc) { alert("Description is required to establish chain of custody."); return; }
-        logEvidence(filename, desc);
-        document.getElementById('xhrModal').remove();
-    });
-}
-
 // --- 6. DATA EXPORT ---
 function generateHRDossier() {
     const reportData = JSON.stringify(state, null, 2);
@@ -309,12 +222,12 @@ function openDocumentEngine() {
             <div class="pleading-paper">
                 <div class="line-numbers">${lines}</div>
                 <div class="pleading-content">
-                    <p><strong>NAME:</strong> USER<br><strong>PRO SE LITIGANT</strong></p><br><br>
+                    <p><strong>NAME:</strong> PRO SE DEFENDANT<br><strong>THE AMERICAN STANDARD NETWORK</strong></p><br><br>
                     ${documentText}
                 </div>
             </div>
         </div>
-        <p style="font-size: 0.85rem; color: #9ca3af; text-align: center; margin-top: 15px;">This visualizer demonstrates how X-HR translates raw logs into standard civil procedure formatting.</p>
+        <p style="font-size: 0.85rem; color: #9ca3af; text-align: center; margin-top: 15px;">Cold, clinical, court-ready formatting. Do not give them a technicality.</p>
     `;
 
     createModalOverlay("PRO SE DOCUMENT ASSEMBLER", html, null, true);
