@@ -1,10 +1,11 @@
-/* --- X-HR MASTER STYLESHEET (TIER-1 PREMIUM UPGRADE V6.1) --- */
+/* --- X-HR MASTER STYLESHEET (TIER-1 PREMIUM UPGRADE V7.0) --- */
 
 :root {
     --bg-gradient: linear-gradient(180deg, #0d131a 0%, #080c11 100%);
     --charcoal: #111827;
     --charcoal-light: #9ca3af;
     --emerald: #10b981; 
+    --neon-blue: #00e5ff; /* The new radiating ASN blue */
     --card-bg: #151e27;
 }
 
@@ -127,6 +128,37 @@ body {
     box-shadow: 0 0 35px rgba(16, 185, 129, 0.25), inset 0 0 20px rgba(16, 185, 129, 0.15);
 }
 
+/* --- THE ASN PRO SE CARD (NEON BLUE ISOLATION) --- */
+.card-pro-se {
+    border: 2px solid rgba(0, 229, 255, 0.6);
+    box-shadow: 0 0 35px rgba(0, 229, 255, 0.2), inset 0 0 20px rgba(0, 229, 255, 0.1);
+}
+
+.card-pro-se:hover {
+    border-color: rgba(0, 229, 255, 1);
+    box-shadow: 0 0 45px rgba(0, 229, 255, 0.35), inset 0 0 25px rgba(0, 229, 255, 0.15);
+}
+
+.card-pro-se h3 {
+    color: var(--neon-blue);
+    text-shadow: 0 0 15px rgba(0, 229, 255, 0.5);
+}
+
+.card-pro-se p { color: #a5f3fc; } /* Lighter cyan text so it stands out from the rest */
+.card-pro-se strong { color: var(--neon-blue); font-weight: 800; text-shadow: 0 0 8px rgba(0, 229, 255, 0.3); }
+
+.card-pro-se .btn-charcoal {
+    background-color: rgba(0, 229, 255, 0.1);
+    color: var(--neon-blue);
+    border-color: var(--neon-blue);
+}
+
+.card-pro-se .btn-charcoal:hover {
+    background-color: var(--neon-blue);
+    color: #000;
+    box-shadow: 0 0 20px rgba(0, 229, 255, 0.6);
+}
+
 /* RADAR ANIMATION */
 .radar-card { position: relative; z-index: 1; }
 .radar-bg {
@@ -145,7 +177,7 @@ body {
 }
 @keyframes sweep { to { transform: rotate(360deg); } }
 
-/* THE FIX: Highly specific rule targeting ONLY the text and injected logs, leaving the background absolute */
+/* The Fix from v6.1 */
 .card h3, .card p, .card button, .card > div[id^="displayArea"] { position: relative; z-index: 2; }
 
 .card h3 { font-family: 'Rajdhani', sans-serif; font-size: 1.5rem; font-weight: 700; margin-bottom: 15px; color: #ffffff; letter-spacing: 1px; }
